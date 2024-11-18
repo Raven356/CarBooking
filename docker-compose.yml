@@ -1,0 +1,21 @@
+services:
+  carbookingapi:
+    image: ${DOCKER_REGISTRY-}carbookingapi
+    build:
+      context: .
+      dockerfile: CarBookingApi/Dockerfile
+    depends_on:
+      - sqldata
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - SA_PASSWORD=EF((6(<s6hj0
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    healthcheck:
+       test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P EF((6(<s6hj0 -Q 'SELECT 1'"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
