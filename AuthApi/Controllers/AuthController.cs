@@ -30,17 +30,17 @@ namespace AuthApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginModel user) 
         {
-            if (user.AccessToken == null && authService.Login(AuthMapper.Map(user)))
-            {
-                var accessToken = await tokenService.CreateAccessToken(AuthMapper.Map(user));
-
-                return Ok(new { token = accessToken.Token, status = true });
-            }
-
             var validationResult = await tokenService.ValidateAccessToken(user.AccessToken);
             if (validationResult.Success == true)
             {
                 return Ok(new { token = validationResult.Token, status = true });
+            }
+
+            if (authService.Login(AuthMapper.Map(user)))
+            {
+                var accessToken = await tokenService.CreateAccessToken(AuthMapper.Map(user));
+
+                return Ok(new { token = accessToken.Token, status = true });
             }
 
             return Unauthorized();

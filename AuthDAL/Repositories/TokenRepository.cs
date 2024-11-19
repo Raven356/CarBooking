@@ -19,7 +19,7 @@ namespace AuthDAL.Repositories
         public async Task<TokenDTO?> GetRefreshToken(int userId)
         {
             return await authContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId
-                && token.ExpiresAt < DateTime.UtcNow
+                && token.ExpiresAt > DateTime.UtcNow
                 && token.Type == TypeEnum.RefreshToken);
         }
 
