@@ -1,5 +1,4 @@
 ﻿using CarBookingDAL.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace CarBookingDAL.Context
 {
