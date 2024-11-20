@@ -63,3 +63,10 @@ services:
     depends_on:
       - reviewsqldata
 
+
+  efficiencyapi:
+    image: ${DOCKER_REGISTRY-}efficiencyapi
+    build:
+      context: .
+      dockerfile: EfficiencyApi/Dockerfile
+

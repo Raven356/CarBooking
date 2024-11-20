@@ -6,7 +6,8 @@
       "serviceActions": {
         "carbookingapi": "StartDebugging",
         "authapi": "StartDebugging",
-        "reviewapi": "StartDebugging"
+        "reviewapi": "StartDebugging",
+        "efficiencyapi": "StartDebugging"
       }
     }
   }
