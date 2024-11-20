@@ -8,9 +8,6 @@ namespace CarBookingDAL.Context
         {
             //context.Database.Migrate();
 
-            // Ensure the database is created
-            context.Database.EnsureCreated();
-
             // Check if data already exists
 
             if (!context.CarTypeDTOs.Any()) 

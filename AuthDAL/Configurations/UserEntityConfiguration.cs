@@ -13,6 +13,8 @@ namespace AuthDAL.Configurations
             builder.HasKey(user => user.Id);
 
             builder.Property(user => user.Phone).HasMaxLength(50);
+
+            builder.HasIndex(user => user.Login, "User_UserLogin_Unique").IsUnique();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace AuthDAL.Repositories
 
         public bool Login(UserDTO userDTO)
         {
-            var registeredUser = authContext.Users.FirstOrDefault(user => user.Login == userDTO.Login);
+            var registeredUser = authContext.Users.FirstOrDefault(user => user.Login == userDTO.Login && user.IsActive);
             if (registeredUser != null) 
             {
                 return passwordHasher.VerifyHashedPassword(registeredUser.PasswordHash, userDTO.PasswordHash) == PasswordVerificationResult.Success;

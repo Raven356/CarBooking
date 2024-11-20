@@ -1,6 +1,7 @@
-using AuthDAL.Context;
 
-namespace AuthApi
+using ReviewDAL.Context;
+
+namespace ReviewApi
 {
     public class Program
     {
@@ -15,7 +16,7 @@ namespace AuthApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            AuthBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
+            ReviewBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 
             var app = builder.Build();
 
@@ -24,13 +25,13 @@ namespace AuthApi
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<AuthContext>();
+                    var context = services.GetRequiredService<ReviewContext>();
 
                     // Ensure the database is created
                     context.Database.EnsureCreated();
 
                     // Seed data
-                    AuthBLL.Setup.SeedDatabase(context);
+                    ReviewBLL.Setup.SeedDatabase(context);
                 }
                 catch (Exception ex)
                 {

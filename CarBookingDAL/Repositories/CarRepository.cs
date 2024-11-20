@@ -14,6 +14,7 @@ namespace CarBookingDAL.Repositories
         {
             var scope = serviceProvider.CreateScope();
             context = scope.ServiceProvider.GetRequiredService<CarBookingContext>();
+            context.Database.EnsureCreated();
         }
 
         public IEnumerable<CarDTO> GetAll()

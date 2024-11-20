@@ -27,6 +27,9 @@ namespace CarBookingApi
                 {
                     var context = services.GetRequiredService<CarBookingContext>();
 
+                    // Ensure the database is created
+                    context.Database.EnsureCreated();
+
                     // Seed data
                     CarBookingBLL.Setup.SeedDatabase(context);
                 }

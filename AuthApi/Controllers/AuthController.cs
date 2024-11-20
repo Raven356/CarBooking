@@ -33,14 +33,14 @@ namespace AuthApi.Controllers
             var validationResult = await tokenService.ValidateAccessToken(user.AccessToken);
             if (validationResult.Success == true)
             {
-                return Ok(new { token = validationResult.Token, status = true });
+                return Ok(new { token = validationResult.Token });
             }
 
             if (authService.Login(AuthMapper.Map(user)))
             {
                 var accessToken = await tokenService.CreateAccessToken(AuthMapper.Map(user));
 
-                return Ok(new { token = accessToken.Token, status = true });
+                return Ok(new { token = accessToken.Token });
             }
 
             return Unauthorized();

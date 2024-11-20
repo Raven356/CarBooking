@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "carbookingapi": "StartDebugging",
-        "authapi": "StartDebugging"
+        "authapi": "StartDebugging",
+        "reviewapi": "StartDebugging"
       }
     }
   }
