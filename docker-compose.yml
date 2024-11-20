@@ -6,6 +6,7 @@ services:
       dockerfile: CarBookingApi/Dockerfile
     depends_on:
       - carbookingsqldata
+      - authapi 
 
   carbookingsqldata:
     image: mcr.microsoft.com/mssql/server:latest
@@ -62,6 +63,7 @@ services:
       dockerfile: ReviewApi/Dockerfile
     depends_on:
       - reviewsqldata
+      - authapi 
 
 
   efficiencyapi:
@@ -69,4 +71,6 @@ services:
     build:
       context: .
       dockerfile: EfficiencyApi/Dockerfile
+    depends_on:
+      - authapi 
 

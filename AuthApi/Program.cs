@@ -15,6 +15,8 @@ namespace AuthApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+
             AuthBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 
             var app = builder.Build();
