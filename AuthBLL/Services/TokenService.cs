@@ -81,22 +81,28 @@ namespace AuthBLL.Services
         {
             DateTime issuedAt = DateTime.UtcNow;
             var tokenHandler = new JwtSecurityTokenHandler();
-            ClaimsIdentity claimsIdentity = new();
+            var claimsIdentity = new ClaimsIdentity(
+            [
+                new Claim("UserId", user.Id.ToString()),
+                new Claim("Type", type.ToString())
+            ]);
 
-            claimsIdentity.AddClaim(new Claim("UserId", user.Id.ToString()));
-            claimsIdentity.AddClaim(new Claim("Type", type.ToString()));
-
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(GenerateRandomString(128)));
-
+            // Use a fixed, secure key stored in configuration or environment variables
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sooZ5a6Zj2mAOEXQaNmrKojwTwKYxfLH"));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            // Create the token
             var jwtToken = tokenHandler.CreateJwtSecurityToken(
-                        subject: claimsIdentity,
-                        notBefore: issuedAt,
-                        expires: expires,
-                        signingCredentials: signingCredentials);
+                subject: claimsIdentity,
+                notBefore: issuedAt,
+                expires: expires,
+                signingCredentials: signingCredentials,
+                issuer: "car-booking-auth-service",
+                audience: "car-booking-mobile-app");
 
             var tokenString = tokenHandler.WriteToken(jwtToken);
 
+            // Return the token model
             var token = new TokenModel()
             {
                 Token = tokenString,
@@ -106,20 +112,6 @@ namespace AuthBLL.Services
             };
 
             return token;
-        }
-
-        private static string GenerateRandomString(int length)
-        {
-            var random = new Random();
-            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            StringBuilder result = new StringBuilder(length);
-
-            for (int i = 0; i < length; i++)
-            {
-                result.Append(chars[random.Next(chars.Length)]);
-            }
-
-            return result.ToString();
         }
     }
 }

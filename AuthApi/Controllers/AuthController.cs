@@ -2,6 +2,7 @@
 using AuthApi.Models;
 using AuthBLL.Interfaces;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthApi.Controllers
@@ -19,6 +20,7 @@ namespace AuthApi.Controllers
             this.tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register(UserModel user)
         {
@@ -27,15 +29,10 @@ namespace AuthApi.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginModel user) 
         {
-            var validationResult = await tokenService.ValidateAccessToken(user.AccessToken);
-            if (validationResult.Success == true)
-            {
-                return Ok(new { token = validationResult.Token });
-            }
-
             if (authService.Login(AuthMapper.Map(user)))
             {
                 var accessToken = await tokenService.CreateAccessToken(AuthMapper.Map(user));

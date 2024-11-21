@@ -1,40 +1,43 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/v1/Car",
+      "DownstreamPathTemplate": "/api/v1/Car/{request}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 8401
+          "Host": "carbookingapi",
+          "Port": 8081
         }
       ],
-      "UpstreamPathTemplate": "/car",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/car/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Review",
+      "DownstreamPathTemplate": "/api/v1/Review/{request}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 8402
+          "Host": "reviewapi",
+          "Port": 8081
         }
       ],
-      "UpstreamPathTemplate": "/review",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/review/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Efficiency",
+      "DownstreamPathTemplate": "/api/v1/Efficiency/{request}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 8403
+          "Host": "efficiencyapi",
+          "Port": 8081
         }
       ],
-      "UpstreamPathTemplate": "/efficiency",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/efficiency/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ],
   "GlobalConfiguration": {

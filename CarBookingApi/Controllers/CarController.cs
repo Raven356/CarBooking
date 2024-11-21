@@ -14,7 +14,7 @@ namespace CarBookingApi.Controllers
             this.carService = carService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var cars = carService.GetAll().ToList();
