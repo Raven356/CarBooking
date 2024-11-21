@@ -1,14 +1,14 @@
 services:
-  carbookingapi:
-    image: ${DOCKER_REGISTRY-}carbookingapi
+  carcatalogapi:
+    image: ${DOCKER_REGISTRY-}carcatalogapi
     build:
       context: .
-      dockerfile: CarBookingApi/Dockerfile
+      dockerfile: CarCatalogApi/Dockerfile
     depends_on:
-      - carbookingsqldata
+      - carcatalogsqldata
       - authapi 
 
-  carbookingsqldata:
+  carcatalogsqldata:
     image: mcr.microsoft.com/mssql/server:latest
     environment:
       - SA_PASSWORD=EF((6(<s6hj0
@@ -73,4 +73,27 @@ services:
       dockerfile: EfficiencyApi/Dockerfile
     depends_on:
       - authapi 
+
+
+  ordersqldata:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - SA_PASSWORD=EF((6(<s6hj0
+      - ACCEPT_EULA=Y
+    ports:
+      - "5436:1433"
+    healthcheck:
+       test: ["CMD-SHELL", "sqlcmd -S localhost -U sa -P EF((6(<s6hj0 -Q 'SELECT 1'"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
+
+  orderapi:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: OrderApi/OrderApi/Dockerfile
+    depends_on:
+     - ordersqldata
+     - authapi
 

@@ -6,6 +6,6 @@ namespace AuthDAL.Interfaces
     {
         public Task<TokenDTO> SaveTokenAsync(TokenDTO token);
 
-        public Task<TokenDTO?> GetRefreshToken(int userId);
+        public Task<TokenDTO?> GetRefreshTokenAsync(int userId);
     }
 }

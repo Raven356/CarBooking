@@ -16,7 +16,7 @@ namespace AuthDAL.Repositories
             authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
         }
 
-        public async Task<TokenDTO?> GetRefreshToken(int userId)
+        public async Task<TokenDTO?> GetRefreshTokenAsync(int userId)
         {
             return await authContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId
                 && token.ExpiresAt > DateTime.UtcNow

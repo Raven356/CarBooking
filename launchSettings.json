@@ -4,10 +4,11 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "carbookingapi": "StartDebugging",
+        "carcatalogapi": "StartDebugging",
         "authapi": "StartDebugging",
         "reviewapi": "StartDebugging",
-        "efficiencyapi": "StartDebugging"
+        "efficiencyapi": "StartDebugging",
+        "orderapi": "StartDebugging"
       }
     }
   }

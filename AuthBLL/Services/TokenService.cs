@@ -27,7 +27,7 @@ namespace AuthBLL.Services
             var token = CreateTokenAsync(DateTime.UtcNow.AddMinutes(30), TypeEnum.AccessToken, AuthMapper.Map(dbUser));
             token.Token = EncryptionHelper.Encrypt(token.Token);
 
-            if (await tokenRepository.GetRefreshToken(dbUser.Id) == null)
+            if (await tokenRepository.GetRefreshTokenAsync(dbUser.Id) == null)
             {
                 var refreshToken = CreateTokenAsync(DateTime.UtcNow.AddHours(12), TypeEnum.RefreshToken, AuthMapper.Map(dbUser));
                 await tokenRepository.SaveTokenAsync(AuthMapper.Map(refreshToken));
@@ -56,7 +56,7 @@ namespace AuthBLL.Services
 
                 int userId = int.Parse(securityToken.Claims.First(claim => claim.Type == "UserId").Value);
 
-                var refreshToken = tokenRepository.GetRefreshToken(userId);
+                var refreshToken = await tokenRepository.GetRefreshTokenAsync(userId);
 
                 if (refreshToken != null) 
                 {

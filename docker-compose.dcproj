@@ -7,7 +7,7 @@
     <ProjectGuid>878a4211-5c5c-43b1-95c3-3b313f1ed172</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>carbookingapi</DockerServiceName>
+    <DockerServiceName>carcatalogapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
