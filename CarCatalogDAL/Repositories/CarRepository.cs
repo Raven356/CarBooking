@@ -24,5 +24,21 @@ namespace CarBookingDAL.Repositories
 
             return cars;
         }
+
+        public async Task MakeCarBooked(int carId, int userId)
+        {
+            var existingCar = await context.CarDTOs.FindAsync(carId);
+
+            if (existingCar != null)
+            {
+                existingCar.RentBy = userId;
+                context.Update(existingCar);
+                
+                await context.SaveChangesAsync();
+                return;
+            }
+
+            throw new KeyNotFoundException($"Car with id:{carId} not found!");
+        }
     }
 }

@@ -22,5 +22,10 @@ namespace CarBookingBLL.Services
 
             return cars;
         }
+
+        public async Task MakeCarBooked(int carId, int userId)
+        {
+            await carRepository.MakeCarBooked(carId, userId);
+        }
     }
 }

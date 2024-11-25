@@ -97,3 +97,17 @@ services:
      - ordersqldata
      - authapi
 
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5673:5672" # Default RabbitMQ port for messaging
+      - "15672:15672" # Management console
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+

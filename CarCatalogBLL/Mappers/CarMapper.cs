@@ -13,7 +13,8 @@ namespace CarBookingBLL.Mappers
                 Id = car.Id,
                 CarType = Map(car.CarType),
                 Model = Map(car.Model),
-                RentPrice = car.RentPrice
+                RentPrice = car.RentPrice,
+                RentBy = car.RentBy
             };
         }
 

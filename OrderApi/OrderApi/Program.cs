@@ -1,4 +1,5 @@
 
+using OrderApi.EventPublisher;
 using OrderDAL.Context;
 
 namespace OrderApi
@@ -15,6 +16,7 @@ namespace OrderApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton<OrderEventsPublisher>();
 
             OrderBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 

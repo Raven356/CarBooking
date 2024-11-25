@@ -18,5 +18,7 @@ namespace CarBookingDAL.Models
         public CarModelDTO Model { get; set; }
 
         public double RentPrice { get; set; }
+
+        public int? RentBy { get; set; }
     }
 }

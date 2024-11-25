@@ -1,5 +1,6 @@
 
 using CarBookingDAL.Context;
+using CarCatalogApi.EventConsumers;
 
 namespace CarCatalogApi
 {
@@ -15,6 +16,7 @@ namespace CarCatalogApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHostedService<OrderStartedEventConsumer>();
 
             CarBookingBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 
