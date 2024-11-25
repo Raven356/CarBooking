@@ -4,9 +4,9 @@ namespace AuthDAL.Interfaces
 {
     public interface IAuthRepository
     {
-        public void Register(UserDTO userDTO);
+        public Task Register(UserDTO userDTO);
 
-        public bool Login(UserDTO userDTO);
+        public Task<bool> Login(UserDTO userDTO);
 
         public void Logout();
 

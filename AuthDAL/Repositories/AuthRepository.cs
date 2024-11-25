@@ -29,9 +29,9 @@ namespace AuthDAL.Repositories
             return await authContext.Users.FirstOrDefaultAsync(user => user.Login == login);
         }
 
-        public bool Login(UserDTO userDTO)
+        public async Task<bool> Login(UserDTO userDTO)
         {
-            var registeredUser = authContext.Users.FirstOrDefault(user => user.Login == userDTO.Login && user.IsActive);
+            var registeredUser = await authContext.Users.FirstOrDefaultAsync(user => user.Login == userDTO.Login && user.IsActive);
             if (registeredUser != null) 
             {
                 return passwordHasher.VerifyHashedPassword(registeredUser.PasswordHash, userDTO.PasswordHash) == PasswordVerificationResult.Success;
@@ -45,11 +45,11 @@ namespace AuthDAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Register(UserDTO userDTO)
+        public async Task Register(UserDTO userDTO)
         {
             userDTO.PasswordHash = passwordHasher.HashPassword(userDTO.PasswordHash);
             authContext.Users.Add(userDTO);
-            authContext.SaveChanges();
+            await authContext.SaveChangesAsync();
         }
     }
 }

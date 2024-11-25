@@ -1,10 +1,6 @@
 ﻿namespace AuthApi.Models
 {
-    public class UserLoginModel
+    public class UserLoginModel : BaseUserAuthModel
     {
-        public string? Login { get; set; }
-
-        public string? Password { get; set; }
-
     }
 }

@@ -14,9 +14,9 @@ namespace AuthBLL.Services
             this.authRepository = authRepository;
         }
 
-        public bool Login(User user)
+        public async Task<bool> Login(User user)
         {
-            return authRepository.Login(AuthMapper.Map(user));
+            return await authRepository.Login(AuthMapper.Map(user));
         }
 
         public void Logout()
@@ -24,9 +24,9 @@ namespace AuthBLL.Services
             authRepository.Logout();
         }
 
-        public void Register(User user)
+        public async Task Register(User user)
         {
-            authRepository.Register(AuthMapper.Map(user));
+            await authRepository.Register(AuthMapper.Map(user));
         }
     }
 }

@@ -4,9 +4,9 @@ namespace AuthBLL.Interfaces
 {
     public interface IAuthService
     {
-        public void Register(User user);
+        public Task Register(User user);
 
-        public bool Login(User user);
+        public Task<bool> Login(User user);
 
         public void Logout();
     }

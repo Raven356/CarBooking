@@ -1,0 +1,59 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/Car/{request}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "carcatalogapi",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/car/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Review/{request}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "reviewapi",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/review/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Efficiency/{request}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "efficiencyapi",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/efficiency/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Order/{request}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orderapi",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/order/{request}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8300"
+  }
+}

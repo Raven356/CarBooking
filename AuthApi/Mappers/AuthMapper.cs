@@ -21,6 +21,22 @@ namespace AuthApi.Mappers
             };
         }
 
+        public static AuthBLL.Models.User Map(UserRegisterModel model)
+        {
+            return new AuthBLL.Models.User
+            {
+                Login = model.Login,
+                Password = model.Password,
+                Email = model.Email,
+                DateOfBirth = model.DateOfBirth,
+                IsActive = true,
+                Name = model.Name,
+                Phone = model.Phone,
+                Role = AuthBLL.Models.RolesEnum.Customer,
+                Surname = model.Surname
+            };
+        }
+
         public static AuthBLL.Models.User Map(UserLoginModel user)
         {
             return new AuthBLL.Models.User
