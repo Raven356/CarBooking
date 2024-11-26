@@ -7,5 +7,7 @@ namespace AuthBLL.Interfaces
         public Task<TokenModel> CreateAccessToken(User user);
 
         public Task<ValidateTokenResult> ValidateAccessToken(string? accessToken);
+
+        int GetUserIdFromToken(string accessToken);
     }
 }

@@ -19,6 +19,7 @@ namespace CarBookingDAL.Repositories
         public IEnumerable<CarDTO> GetAll()
         {
             var cars = context.CarDTOs
+                .Where(car => car.RentBy == null)
                 .Include(car => car.CarType)
                 .Include(car => car.Model);
 

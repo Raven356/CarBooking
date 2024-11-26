@@ -67,7 +67,7 @@ namespace AuthApi
             app.UseMiddleware<TokenValidationMiddleware>();
 
             app.MapWhen(
-                ctx => !ctx.Request.Path.StartsWithSegments("/swagger") && !ctx.Request.Path.StartsWithSegments("/api/v1/Auth"), 
+                ctx => !ctx.Request.Path.StartsWithSegments("/swagger") && !ctx.Request.Path.StartsWithSegments("/api/v1/Auth") && !ctx.Request.Path.StartsWithSegments("/api/v1/User"), 
                 app => app.UseOcelot().Wait()
             );
 

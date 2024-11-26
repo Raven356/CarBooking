@@ -36,6 +36,15 @@ namespace AuthBLL.Services
             return token;
         }
 
+        public int GetUserIdFromToken(string accessToken)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadJwtToken(EncryptionHelper.Decrypt(accessToken));
+
+            int userId = int.Parse(securityToken.Claims.First(claim => claim.Type == "UserId").Value);
+            return userId;
+        }
+
         public async Task<ValidateTokenResult> ValidateAccessToken(string? accessToken)
         {
             if (accessToken == null)
