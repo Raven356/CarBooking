@@ -40,7 +40,7 @@ namespace CarBookingUI
             }
         }
 
-        private async void OnLoginClicked(object sender, EventArgs e)
+        private async Task OnLoginClicked()
         {
             await Navigation.PushAsync(new LoginPage());
         }
@@ -52,7 +52,7 @@ namespace CarBookingUI
                 var viewModel = new OrderPageViewModel()
                 {
                     CarId = selectedCar.Id,
-                    Descritption = $"Are you sure you want to proceed with ordering car {selectedCar.Name} for price {selectedCar.Price}",
+                    Description = $"Are you sure you want to proceed with ordering car {selectedCar.Name} for price {selectedCar.Price}",
                     Name = selectedCar.Name
                 };
 
@@ -61,6 +61,27 @@ namespace CarBookingUI
 
             // Знімаємо виділення елемента
             ((ListView)sender).SelectedItem = null;
+        }
+
+        private async void OnMenuClicked(object sender, EventArgs e)
+        {
+            string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Login", "Order history", "Review");
+
+            switch (action)
+            {
+                case "Login":
+                    await OnLoginClicked();
+                    break;
+                case "Order history":
+                    await Navigation.PushAsync(new HistoryPage());
+                    break;
+                case "Review":
+                    await DisplayAlert("Action", "You selected Option 3", "OK");
+                    break;
+                default:
+                    // Cancel or null case
+                    break;
+            }
         }
     }
 

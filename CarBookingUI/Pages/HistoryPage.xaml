@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarBookingUI.Pages.HistoryPage"
+             Title="HistoryPage">
+    <AbsoluteLayout>
+
+        <ImageButton Source="menu.png"
+         Clicked="OnMenuClicked"
+         AbsoluteLayout.LayoutBounds="2, 0, AutoSize, AutoSize"
+         AbsoluteLayout.LayoutFlags="PositionProportional"
+         Margin="0,0,10,0"
+         HeightRequest= "40"  />
+
+        <Label Text="Order History"
+           FontSize="24"
+           FontAttributes="Bold"
+           HorizontalTextAlignment="Center"
+           AbsoluteLayout.LayoutBounds="0.5, 0.1, AutoSize, AutoSize"
+           AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <!-- Orders ListView -->
+        <ListView ItemsSource="{Binding Orders}" 
+              AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.8, 0.7"
+              AbsoluteLayout.LayoutFlags="All"
+              ItemTapped="OnOrderTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.25*" />
+                                <ColumnDefinition Width="0.25*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Adds spacing -->
+                            <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding Name}"
+                           FontAttributes="Bold" />
+                            <Label Grid.Row="0"
+                           Grid.Column="2"
+                           Text="{Binding StartDate}"
+                           FontAttributes="Italic"
+                           HorizontalOptions="End" />
+                            <Label Grid.Row="0"
+                                Grid.Column="2"
+                                Text="{Binding EndDate}"
+                                FontAttributes="Italic"
+                                HorizontalOptions="End" />
+                            <Label IsVisible="False" Text="{Binding Id}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </AbsoluteLayout>
+</ContentPage>

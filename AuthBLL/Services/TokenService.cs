@@ -25,7 +25,6 @@ namespace AuthBLL.Services
         {
             var dbUser = await authRepository.GetUserByLoginAsync(user.Login);
             var token = CreateTokenAsync(DateTime.UtcNow.AddMinutes(30), TypeEnum.AccessToken, AuthMapper.Map(dbUser));
-            token.Token = EncryptionHelper.Encrypt(token.Token);
 
             if (await tokenRepository.GetRefreshTokenAsync(dbUser.Id) == null)
             {
@@ -39,7 +38,7 @@ namespace AuthBLL.Services
         public int GetUserIdFromToken(string accessToken)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.ReadJwtToken(EncryptionHelper.Decrypt(accessToken));
+            var securityToken = tokenHandler.ReadJwtToken(accessToken);
 
             int userId = int.Parse(securityToken.Claims.First(claim => claim.Type == "UserId").Value);
             return userId;
@@ -53,7 +52,7 @@ namespace AuthBLL.Services
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.ReadJwtToken(EncryptionHelper.Decrypt(accessToken));
+            var securityToken = tokenHandler.ReadJwtToken(accessToken);
 
             if (securityToken != null) 
             { 

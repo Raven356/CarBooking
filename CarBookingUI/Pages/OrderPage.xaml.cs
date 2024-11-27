@@ -31,6 +31,7 @@ public partial class OrderPage : ContentPage
                 if (orderResponse.IsSuccessStatusCode)
                 {
                     await DisplayAlert("Order Created", "Your car has been booked!", "OK");
+                    await Navigation.PushAsync(new MainPage());
                 }
                 else 
                 {
