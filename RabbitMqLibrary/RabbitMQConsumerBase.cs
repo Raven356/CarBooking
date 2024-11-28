@@ -1,20 +1,22 @@
-﻿using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
 
 namespace RabbitMqLibrary
 {
-    public abstract class RabbitMQConsumerBase<T> : BackgroundService, IDisposable where T : class
+    public abstract class RabbitMQConsumerBase<T> : BackgroundService, IDisposable
     {
         private readonly string _exchangeName;
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly ILogger<RabbitMQConsumerBase<T>> _logger;
 
-        protected RabbitMQConsumerBase(ILogger<RabbitMQConsumerBase<T>> logger, string exchangeName)
+        protected BasicDeliverEventArgs CurrentEventArgs { get; private set; }
+
+        protected RabbitMQConsumerBase(ILogger<RabbitMQConsumerBase<T>> logger, string exchangeName, string routingKey)
         {
             _exchangeName = exchangeName;
             _logger = logger;
@@ -29,14 +31,16 @@ namespace RabbitMqLibrary
             _channel = _connection.CreateModel();
 
             // Declare exchange and queue
-            _channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Fanout);
+            _channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
             var queueName = _channel.QueueDeclare().QueueName;
-            _channel.QueueBind(queue: queueName, exchange: _exchangeName, routingKey: "");
+            _channel.QueueBind(queue: queueName, exchange: _exchangeName, routingKey: routingKey);
 
             // Set up consumer
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
             {
+                CurrentEventArgs = ea;
+
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 _logger.LogInformation($"Received message from {_exchangeName}: {message}");
@@ -49,6 +53,11 @@ namespace RabbitMqLibrary
             };
 
             _channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+        }
+
+        protected IBasicProperties GetMessageProperties()
+        {
+            return CurrentEventArgs?.BasicProperties;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken) => Task.CompletedTask;

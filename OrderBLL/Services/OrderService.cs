@@ -14,6 +14,11 @@ namespace OrderBLL.Services
             this.orderRepository = orderRepository;
         }
 
+        public async Task<RentOrder> GetById(int orderId)
+        {
+            return OrderMapper.Map(await orderRepository.GetById(orderId));
+        }
+
         public async Task<IEnumerable<RentOrder>> GetRentOrdersByUserIdAsync(int userId)
         {
             var orders = await orderRepository.GetRentOrdersByUserIdAsync(userId);

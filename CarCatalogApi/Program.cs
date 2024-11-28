@@ -1,4 +1,3 @@
-
 using CarBookingDAL.Context;
 using CarCatalogApi.EventConsumers;
 
@@ -17,6 +16,7 @@ namespace CarCatalogApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHostedService<OrderStartedEventConsumer>();
+            builder.Services.AddHostedService<CarRpcConsumer>();
 
             CarBookingBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 

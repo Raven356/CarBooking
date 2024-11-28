@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarBookingUI.Pages.HistoryOrderDetailsPage"
+             Title="History Order Details"
+             BackgroundColor="White">
+
+    <ContentPage.Content>
+        <ScrollView Padding="20">
+            <StackLayout Spacing="15">
+                <!-- Order ID -->
+                <Label Text="Order ID:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.Id}"
+                       FontSize="Large" />
+
+                <!-- Car Plate -->
+                <Label Text="Car Plate:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.CarPlate}"
+                       FontSize="Large" />
+
+                <!-- Car Image -->
+                <!-- <Label Text="Car Image:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Image Source="{Binding Order.CarImage, Converter={StaticResource ImageConverter}}"
+                       HeightRequest="200"
+                       WidthRequest="300"
+                       Aspect="AspectFill"
+                       IsVisible="{Binding Order.CarImage}" /> -->
+
+                <!-- Rent Dates -->
+                <Label Text="Rent From:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.RentFromUTC, StringFormat='{0:MM/dd/yyyy HH:mm}'}"
+                       FontSize="Large" />
+
+                <Label Text="Rent To:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.RentToUTC, StringFormat='{0:MM/dd/yyyy HH:mm}'}"
+                       FontSize="Large" />
+
+                <!-- Rent By -->
+                <Label Text="Rented By:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.RentBy}"
+                       FontSize="Large" />
+
+                <!-- Is Accepted -->
+                <Label Text="Accepted:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Order.IsAcepted, Converter={StaticResource BoolToStringConverter}}"
+                       FontSize="Large" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

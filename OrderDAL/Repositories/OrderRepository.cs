@@ -16,6 +16,15 @@ namespace OrderDAL.Repositories
             context = scope.ServiceProvider.GetRequiredService<OrderContext>();
         }
 
+        public async Task<RentOrderDTO> GetById(int orderId)
+        {
+            var order = await context.RentOrder
+                .Include(o => o.RentInfoDTO)
+                .FirstAsync(o => o.Id == orderId);
+
+            return order;
+        }
+
         public async Task<IEnumerable<RentOrderDTO>> GetRentOrdersByUserIdAsync(int userId)
         {
             var orders = await context.RentOrder

@@ -1,5 +1,6 @@
 using CarBookingUI.Helpers;
 using CarBookingUI.Mappers;
+using CarBookingUI.Models;
 using CarBookingUI.Models.Responses.OrderResponse;
 using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
@@ -49,7 +50,7 @@ public partial class HistoryPage : ContentPage
 
     private async void OnMenuClicked(object sender, EventArgs e)
     {
-        string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Login", "Order history", "Review");
+        string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Logout", "Main page", "Review");
 
         switch (action)
         {
@@ -68,8 +69,14 @@ public partial class HistoryPage : ContentPage
         }
     }
 
-    private async void OnOrderTapped(object sender, EventArgs e)
+    private async void OnOrderTapped(object sender, ItemTappedEventArgs e)
     {
+        if (e.Item is Order selectedOrder)
+        {
+            await Navigation.PushAsync(new HistoryOrderDetailsPage(selectedOrder.Id));
+        }
 
+        // Знімаємо виділення елемента
+        ((ListView)sender).SelectedItem = null;
     }
 }

@@ -7,5 +7,7 @@ namespace CarBookingBLL.Interfaces
         public IEnumerable<Car> GetAll();
 
         public Task MakeCarBooked(int carId, int userId);
+
+        public Task<Car> GetByIdAsync(int carId);
     }
 }

@@ -16,7 +16,8 @@ namespace AuthApi.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             if (context.Request.Path.StartsWithSegments("/api/v1/auth") || context.Request.Path.StartsWithSegments("/swagger")
-                || context.Request.Path.StartsWithSegments("/api/v1/user"))
+                || context.Request.Path.StartsWithSegments("/api/v1/user")
+                || context.Request.Path.StartsWithSegments("/car/GetAll"))
             {
                 await _next(context);
                 return;

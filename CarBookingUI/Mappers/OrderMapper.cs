@@ -10,9 +10,9 @@ namespace CarBookingUI.Mappers
             return new Order
             {
                 Id = model.Id,
-                StartDate = model.RentInfo.RentFromUTC.ToLongDateString(),
-                EndDate = model.RentInfo.RentToUTC.ToLongDateString(),
-                Name = $"Order #{model.Id}, Accepted: {model.IsAcepted}"
+                StartDate = model.RentInfo.RentFromUTC.ToShortDateString(),
+                EndDate = model.RentInfo.RentToUTC.ToShortDateString(),
+                Name = $"#{model.Id}"
             };
         }
 

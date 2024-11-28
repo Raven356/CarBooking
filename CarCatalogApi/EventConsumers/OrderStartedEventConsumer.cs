@@ -8,7 +8,7 @@ namespace CarCatalogApi.EventConsumers
     {
         private readonly ICarService carService;
 
-        public OrderStartedEventConsumer(ILogger<RabbitMQConsumerBase<OrderStartedEvent>> logger, ICarService carService) : base(logger, "order_events")
+        public OrderStartedEventConsumer(ILogger<RabbitMQConsumerBase<OrderStartedEvent>> logger, ICarService carService) : base(logger, "order_events", "")
         {
             this.carService = carService;
         }

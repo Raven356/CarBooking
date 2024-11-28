@@ -7,5 +7,6 @@ namespace OrderBLL.Interfaces
         public Task SaveOrderAsync(RentOrder rentOrder);
 
         public Task<IEnumerable<RentOrder>> GetRentOrdersByUserIdAsync(int userId);
+        Task<RentOrder> GetById(int orderId);
     }
 }

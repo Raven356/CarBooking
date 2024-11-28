@@ -26,6 +26,16 @@ namespace CarBookingDAL.Repositories
             return cars;
         }
 
+        public async Task<CarDTO> GetCarByIdAsync(int carId)
+        {
+            var car = await context.CarDTOs
+                .Include(car => car.CarType)
+                .Include(car => car.Model)
+                .FirstAsync(car => car.Id == carId);
+
+            return car;
+        }
+
         public async Task MakeCarBooked(int carId, int userId)
         {
             var existingCar = await context.CarDTOs.FindAsync(carId);

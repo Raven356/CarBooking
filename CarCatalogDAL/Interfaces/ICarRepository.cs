@@ -7,5 +7,7 @@ namespace CarBookingDAL.Interfaces
         public IEnumerable<CarDTO> GetAll();
 
         public Task MakeCarBooked(int carId, int userId);
+
+        public Task<CarDTO> GetCarByIdAsync(int carId);
     }
 }

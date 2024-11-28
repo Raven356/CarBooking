@@ -17,6 +17,11 @@ namespace AuthApi.Controllers
         [HttpGet("GetUserIdByToken")]
         public IActionResult Index([FromQuery] string token)
         {
+            if (token == null) 
+            {
+                return BadRequest();
+            }
+
             int userId = tokenService.GetUserIdFromToken(token);
             return Ok(new { userId });
         }

@@ -23,6 +23,11 @@ namespace CarBookingBLL.Services
             return cars;
         }
 
+        public async Task<Car> GetByIdAsync(int carId)
+        {
+            return CarMapper.Map(await carRepository.GetCarByIdAsync(carId));
+        }
+
         public async Task MakeCarBooked(int carId, int userId)
         {
             await carRepository.MakeCarBooked(carId, userId);

@@ -7,7 +7,7 @@
 
         <ImageButton Source="menu.png"
          Clicked="OnMenuClicked"
-         AbsoluteLayout.LayoutBounds="2, 0, AutoSize, AutoSize"
+         AbsoluteLayout.LayoutBounds="-1, 0, AutoSize, AutoSize"
          AbsoluteLayout.LayoutFlags="PositionProportional"
          Margin="0,0,10,0"
          HeightRequest= "40"  />
@@ -16,43 +16,49 @@
            FontSize="24"
            FontAttributes="Bold"
            HorizontalTextAlignment="Center"
-           AbsoluteLayout.LayoutBounds="0.5, 0.1, AutoSize, AutoSize"
+           AbsoluteLayout.LayoutBounds="0.5, 0.05, AutoSize, AutoSize"
            AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <Label Text="Order id"
+           FontSize="18"
+           FontAttributes="Bold"
+           HorizontalOptions="StartAndExpand"
+               AbsoluteLayout.LayoutBounds="0.1, 0.13, AutoSize, AutoSize"
+AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        
+        <Label Text="Date from"
+           FontSize="18"
+           FontAttributes="Bold"
+           HorizontalOptions="CenterAndExpand"
+               AbsoluteLayout.LayoutBounds="0.5, 0.13, AutoSize, AutoSize"
+AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        
+        <Label Text="Date to"
+           FontSize="18"
+           FontAttributes="Bold"
+           HorizontalOptions="End"
+               AbsoluteLayout.LayoutBounds="0.8, 0.13, AutoSize, AutoSize"
+AbsoluteLayout.LayoutFlags="PositionProportional"/>
 
         <!-- Orders ListView -->
         <ListView ItemsSource="{Binding Orders}" 
-              AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.8, 0.7"
+              AbsoluteLayout.LayoutBounds="0.5, 0.6, 0.8, 0.7"
               AbsoluteLayout.LayoutFlags="All"
               ItemTapped="OnOrderTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.25*" />
-                                <ColumnDefinition Width="0.25*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <!-- Adds spacing -->
-                            <Label Grid.Row="0"
-                           Grid.Column="1"
-                           Text="{Binding Name}"
-                           FontAttributes="Bold" />
-                            <Label Grid.Row="0"
-                           Grid.Column="2"
-                           Text="{Binding StartDate}"
-                           FontAttributes="Italic"
-                           HorizontalOptions="End" />
-                            <Label Grid.Row="0"
-                                Grid.Column="2"
-                                Text="{Binding EndDate}"
-                                FontAttributes="Italic"
-                                HorizontalOptions="End" />
-                            <Label IsVisible="False" Text="{Binding Id}" />
-                        </Grid>
+                        <StackLayout Orientation="Horizontal" Spacing="10" Padding="10">
+                            <Label Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               HorizontalOptions="StartAndExpand" />
+                            <Label Text="{Binding StartDate}"
+                               FontAttributes="Italic"
+                               HorizontalOptions="CenterAndExpand" />
+                            <Label Text="{Binding EndDate}"
+                               FontAttributes="Italic"
+                               HorizontalOptions="End" />
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
