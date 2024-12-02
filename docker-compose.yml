@@ -98,7 +98,7 @@ services:
      - authapi
 
   rabbitmq:
-    image: rabbitmq:management
+    image: heidiks/rabbitmq-delayed-message-exchange:latest
     ports:
       - "5673:5672" # Default RabbitMQ port for messaging
       - "15672:15672" # Management console
@@ -110,4 +110,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+
+  timedeventsapi:
+    image: ${DOCKER_REGISTRY-}timedeventsapi
+    build:
+      context: .
+      dockerfile: TimedEventsApi/Dockerfile
 

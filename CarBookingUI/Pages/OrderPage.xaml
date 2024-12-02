@@ -24,6 +24,34 @@
                HorizontalOptions="Center" 
                TextColor="Gray" />
 
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Date from:" 
+               FontSize="16" 
+               VerticalOptions="Center" />
+
+            <DatePicker x:Name="DateFrom" 
+                Format="D" 
+                HorizontalOptions="Start" />
+
+            <TimePicker x:Name="TimeFrom" 
+                Format="t" 
+                HorizontalOptions="Start" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Date to:" 
+                   FontSize="16" 
+                   VerticalOptions="Center" />
+            
+            <DatePicker x:Name="DateTo" 
+                        Format="D" 
+                        HorizontalOptions="Start" />
+            
+            <TimePicker x:Name="TimeTo" 
+                Format="t" 
+                HorizontalOptions="Start" />
+        </HorizontalStackLayout>
+
         <!-- Confirm Button -->
         <Button Text="Confirm" 
                 HorizontalOptions="Center" 

@@ -4,7 +4,7 @@ namespace OrderApi.EventPublisher
 {
     public class OrderEventsPublisher : RabbitMQPublisherBase
     {
-        public OrderEventsPublisher() : base("order_events")
+        public OrderEventsPublisher() : base("order_events", "direct")
         {
         }
     }

@@ -1,5 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMqLibrary.EventConverter;
+using RabbitMqLibrary.Events;
 using System.Text;
 using System.Text.Json;
 
@@ -11,25 +13,54 @@ namespace RabbitMqLibrary
         private readonly IModel channel;
         private readonly string exchange;
 
-        public RabbitMQPublisherBase(string exchange)
+        public RabbitMQPublisherBase(string exchange, string type, Dictionary<string, object> args = null)
         {
             var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
 
             // Declare exchange
-            channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Direct);
+            channel.ExchangeDeclare(exchange: exchange, type: type, arguments: args);
             this.exchange = exchange;
         }
 
-        public void Publish<T>(T @event)
+        public void Publish<T>(T @event, string routingKey)
         {
-            var jsonMessage = JsonSerializer.Serialize(@event);
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new BaseEventConverter() },
+                PropertyNameCaseInsensitive = true
+            };
+
+            var jsonMessage = JsonSerializer.Serialize(@event, options);
             var body = Encoding.UTF8.GetBytes(jsonMessage);
 
             channel.BasicPublish(exchange: exchange,
-                                 routingKey: "",
+                                 routingKey: routingKey,
                                  basicProperties: null,
+                                 body: body);
+        }
+
+        public void PublishWithTimeout<T>(T @event, string routingKey, int timeout) where T : BaseEvent
+        {
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new BaseEventConverter() },
+                PropertyNameCaseInsensitive = true
+            };
+
+            var jsonMessage = JsonSerializer.Serialize(@event, options);
+            var body = Encoding.UTF8.GetBytes(jsonMessage);
+
+            var props = channel.CreateBasicProperties();
+            props.Headers = new Dictionary<string, object>
+            {
+                { "x-delay", timeout}
+            };
+
+            channel.BasicPublish(exchange: exchange,
+                                 routingKey: routingKey,
+                                 basicProperties: props,
                                  body: body);
         }
 
@@ -42,7 +73,13 @@ namespace RabbitMqLibrary
             props.ReplyTo = replyQueue;
             props.CorrelationId = correlationId;
 
-            var jsonMessage = JsonSerializer.Serialize(@event);
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new BaseEventConverter() },
+                PropertyNameCaseInsensitive = true
+            };
+
+            var jsonMessage = JsonSerializer.Serialize(@event, options);
             var body = Encoding.UTF8.GetBytes(jsonMessage);
 
             // Publish the request

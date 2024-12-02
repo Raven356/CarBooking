@@ -11,5 +11,7 @@
         public int CarId { get; set; }
 
         public int RentBy { get; set; }
+
+        public DateTime? RentFinished { get; set; }
     }
 }

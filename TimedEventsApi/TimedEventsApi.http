@@ -1,0 +1,6 @@
+@TimedEventsApi_HostAddress = http://localhost:5187
+
+GET {{TimedEventsApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,11 +1,8 @@
-﻿using CarBookingUI.Models;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.ObjectModel;
 
 namespace CarBookingUI.ViewModels
 {
-    public class HistoryPageViewModel : INotifyPropertyChanged
+    public class HistoryPageViewModel : BaseViewModel
     {
         private ObservableCollection<Models.Order> _orders;
 
@@ -25,13 +22,6 @@ namespace CarBookingUI.ViewModels
         public HistoryPageViewModel()
         {
             Orders = new ObservableCollection<Models.Order>();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

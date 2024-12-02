@@ -9,5 +9,9 @@ namespace OrderDAL.Interfaces
         public Task<IEnumerable<RentOrderDTO>> GetRentOrdersByUserIdAsync(int userId);
 
         public Task<RentOrderDTO> GetById(int orderId);
+
+        public Task EndOrderAsync(int orderId, DateTime endOrderTime);
+
+        Task<RentOrderDTO> EditOrderAsync(int orderId, DateTime dateFrom, DateTime dateTo);
     }
 }

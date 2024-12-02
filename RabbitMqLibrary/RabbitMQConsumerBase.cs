@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RabbitMqLibrary.EventConverter;
 
 namespace RabbitMqLibrary
 {
@@ -16,7 +17,8 @@ namespace RabbitMqLibrary
 
         protected BasicDeliverEventArgs CurrentEventArgs { get; private set; }
 
-        protected RabbitMQConsumerBase(ILogger<RabbitMQConsumerBase<T>> logger, string exchangeName, string routingKey)
+        protected RabbitMQConsumerBase(ILogger<RabbitMQConsumerBase<T>> logger, string exchangeName, string routingKey, string type,
+            Dictionary<string, object> args = null)
         {
             _exchangeName = exchangeName;
             _logger = logger;
@@ -31,7 +33,7 @@ namespace RabbitMqLibrary
             _channel = _connection.CreateModel();
 
             // Declare exchange and queue
-            _channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
+            _channel.ExchangeDeclare(exchange: _exchangeName, type: type, arguments: args);
             var queueName = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: queueName, exchange: _exchangeName, routingKey: routingKey);
 
@@ -45,7 +47,13 @@ namespace RabbitMqLibrary
                 var message = Encoding.UTF8.GetString(body);
                 _logger.LogInformation($"Received message from {_exchangeName}: {message}");
 
-                var eventData = JsonSerializer.Deserialize<T>(message);
+                var options = new JsonSerializerOptions
+                {
+                    Converters = { new BaseEventConverter() },
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var eventData = JsonSerializer.Deserialize<T>(message, options);
                 if (eventData != null)
                 {
                     await HandleMessageAsync(eventData);

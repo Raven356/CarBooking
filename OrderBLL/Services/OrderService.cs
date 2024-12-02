@@ -14,6 +14,16 @@ namespace OrderBLL.Services
             this.orderRepository = orderRepository;
         }
 
+        public async Task<RentOrder> EditOrderAsync(int orderId, DateTime dateFrom, DateTime dateTo)
+        {
+            return OrderMapper.Map(await orderRepository.EditOrderAsync(orderId, dateFrom, dateTo));
+        }
+
+        public async Task EndOrderAsync(int orderId, DateTime endOrderTime)
+        {
+            await orderRepository.EndOrderAsync(orderId, endOrderTime);
+        }
+
         public async Task<RentOrder> GetById(int orderId)
         {
             return OrderMapper.Map(await orderRepository.GetById(orderId));

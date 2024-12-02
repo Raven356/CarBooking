@@ -3,18 +3,35 @@ using System.Collections.ObjectModel;
 
 namespace CarBookingUI.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : BaseViewModel
     {
-        public ObservableCollection<Car> Cars { get; set; }
+        private bool isAuthVisible;
 
-        public bool IsAuthVisible { get; set; }
+        private ObservableCollection<Car> cars;
 
-        public MainPageViewModel(IEnumerable<Car> cars)
+        public bool IsAuthVisible 
+        { 
+            get => isAuthVisible;
+            set
+            {
+                isAuthVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Car> Cars
         {
-            Cars = new ObservableCollection<Car>(cars);
+            get => cars;
+            set
+            {
+                cars = value;
+                OnPropertyChanged();
+            }
+        }
 
-            IsAuthVisible = true;
-            //IsAuthVisible = SecureStorage.GetAsync("auth_token").GetAwaiter().GetResult() == null;
+        public MainPageViewModel()
+        {
+            
         }
     }
 }

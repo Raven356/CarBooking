@@ -10,10 +10,10 @@
 
         public DateTime RentToUTC { get; set; }
 
+        public DateTime? RentFinished { get; set; }
+
         //public byte[] CarImage { get; set; }
 
         public string CarPlate { get; set; }
-
-        public int RentBy { get; set; }
     }
 }

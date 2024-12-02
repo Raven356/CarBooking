@@ -1,6 +1,7 @@
 
 using OrderApi.EventPublisher;
 using OrderDAL.Context;
+using RabbitMqLibrary.TimedRoutine;
 
 namespace OrderApi
 {
@@ -17,6 +18,8 @@ namespace OrderApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<OrderEventsPublisher>();
+            builder.Services.AddSingleton<OrderEventsTimeoutPublisher>();
+            builder.Services.AddSingleton<TimedEventHistoryPublisher>();
 
             OrderBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 

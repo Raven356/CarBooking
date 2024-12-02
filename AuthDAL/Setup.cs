@@ -27,8 +27,9 @@ namespace AuthDAL
                 });
             });
 
-            services.AddSingleton<IAuthRepository, AuthRepository>();
-            services.AddSingleton<ITokenRepository, TokenRepository>();
+            services.AddSingleton<IAuthRepository, AuthRepository>()
+                .AddSingleton<ITokenRepository, TokenRepository>()
+                .AddSingleton<IUserRepository, UserRepository>();
         }
     }
 }

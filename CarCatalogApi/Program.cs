@@ -1,5 +1,6 @@
 using CarBookingDAL.Context;
 using CarCatalogApi.EventConsumers;
+using RabbitMqLibrary.TimedRoutine;
 
 namespace CarCatalogApi
 {
@@ -15,8 +16,10 @@ namespace CarCatalogApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddHostedService<OrderStartedEventConsumer>();
-            builder.Services.AddHostedService<CarRpcConsumer>();
+
+            builder.Services.AddSingleton<TimedEventHistoryPublisher>();
+
+            RegisterEventConsumers(builder.Services);
 
             CarBookingBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 
@@ -57,6 +60,13 @@ namespace CarCatalogApi
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void RegisterEventConsumers(IServiceCollection services)
+        {
+            services.AddHostedService<OrderStartedEventConsumer>()
+                .AddHostedService<CarRpcConsumer>()
+                .AddHostedService<EndOrderEventConsumer>();
         }
     }
 }

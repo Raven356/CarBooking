@@ -16,6 +16,44 @@ namespace OrderDAL.Repositories
             context = scope.ServiceProvider.GetRequiredService<OrderContext>();
         }
 
+        public async Task<RentOrderDTO> EditOrderAsync(int orderId, DateTime dateFrom, DateTime dateTo)
+        {
+            var order = await context.RentOrder
+                .Include(order => order.RentInfoDTO)
+                .FirstAsync(order => order.Id == orderId);
+
+            if (order == null)
+            {
+                throw new ArgumentNullException($"Order with id: {orderId} not found!");
+            }
+
+            order.RentInfoDTO.RentFromUTC = dateFrom;
+            order.RentInfoDTO.RentToUTC = dateTo;
+
+            context.Update(order);
+
+            await context.SaveChangesAsync();
+
+            return order;
+        }
+
+        public async Task EndOrderAsync(int orderId, DateTime endOrderTime)
+        {
+            var order = await context.RentOrder
+                .Include(order => order.RentInfoDTO)
+                .FirstAsync(order => order.Id == orderId);
+
+            if (order == null)
+            {
+                throw new ArgumentNullException($"Order with id: {orderId} not found!");
+            }
+
+            order.RentInfoDTO.RentFinished = endOrderTime;
+            context.Update(order);
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task<RentOrderDTO> GetById(int orderId)
         {
             var order = await context.RentOrder

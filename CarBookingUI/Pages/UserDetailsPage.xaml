@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarBookingUI.Pages.UserDetailsPage"
+             Title="UserDetailsPage">
+    
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <ImageButton Source="menu.png"
+                     Clicked="OnMenuClicked"
+                     HeightRequest="40"
+                     WidthRequest="40"
+                     BackgroundColor="Transparent"
+                     AbsoluteLayout.LayoutBounds="0.92,0,40,40"
+                     AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+            <!-- Основний вміст -->
+            <ScrollView Padding="20"
+                    AbsoluteLayout.LayoutBounds="0.5, 0.25, 0.8, 0.8"
+                    AbsoluteLayout.LayoutFlags="All">
+                <StackLayout Spacing="15">
+
+                    <Label Text="Name:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                    <Label Text="{Binding Name}"
+                       FontSize="Large" />
+
+                    <Label Text="Surname:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                    <Label Text="{Binding Surname}"
+                       FontSize="Large" />
+                    
+                    <Label Text="Phone:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                    <Label Text="{Binding Phone}"
+                       FontSize="Large" />
+
+                    <Label Text="Email:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                    <Label Text="{Binding Email}}"
+                       FontSize="Large" />
+
+                    <Label Text="Date of birth:"
+                       FontSize="Medium"
+                       FontAttributes="Bold" />
+                    <Label Text="{Binding DateOfBirth}}"
+                        FontSize="Large" />
+
+                    <Button Text="Edit user"
+                        Margin="5"
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        Clicked="OnEditUserButtonClicked" />
+
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

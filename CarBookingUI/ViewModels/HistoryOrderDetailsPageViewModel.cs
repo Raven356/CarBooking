@@ -1,12 +1,14 @@
 ﻿using CarBookingUI.Models.Responses.OrderResponse;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace CarBookingUI.ViewModels
 {
-    public class HistoryOrderDetailsPageViewModel : INotifyPropertyChanged
+    public class HistoryOrderDetailsPageViewModel : BaseViewModel
     {
         private OrderCarResponse order;
+
+        private bool canWriteReview;
+
+        private bool canEndOrder;
 
         public OrderCarResponse Order
         {
@@ -21,16 +23,29 @@ namespace CarBookingUI.ViewModels
             }
         }
 
+        public bool CanWriteReview
+        {
+            get => canWriteReview;
+            set
+            {
+                canWriteReview = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool CanEndOrder
+        {
+            get => canEndOrder;
+            set
+            {
+                canEndOrder = value;
+                OnPropertyChanged();
+            }
+        }
+
         public HistoryOrderDetailsPageViewModel()
         {
             Order = new OrderCarResponse();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

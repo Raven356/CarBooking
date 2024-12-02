@@ -7,10 +7,10 @@ namespace AuthDAL.Models
     {
         public int Id { get; set; }
 
-        public required string Login { get; set; }
+        public string Login { get; set; }
 
         [Column("Password")]
-        public required string PasswordHash { get; set; }
+        public string PasswordHash { get; set; }
 
         public string? Phone { get; set; }
 

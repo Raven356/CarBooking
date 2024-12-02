@@ -11,6 +11,8 @@ namespace OrderDAL.Models
 
         public DateTime RentToUTC { get; set; }
 
+        public DateTime? RentFinished { get; set; }
+
         public int CarId { get; set; }
 
         public int RentBy {  get; set; }

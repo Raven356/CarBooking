@@ -40,6 +40,7 @@ namespace OrderBLL.Mappers
                 RentBy = info.RentBy,
                 RentFromUTC = info.RentFromUTC,
                 RentToUTC = info.RentToUTC,
+                RentFinished = info.RentFinished
             };
         }
 
@@ -52,6 +53,7 @@ namespace OrderBLL.Mappers
                 RentBy = rentInfo.RentBy,
                 RentFromUTC = rentInfo.RentFromUTC,
                 RentToUTC = rentInfo.RentToUTC,
+                RentFinished = rentInfo.RentFinished,
             };
         }
     }

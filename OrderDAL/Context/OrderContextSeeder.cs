@@ -14,10 +14,11 @@ namespace OrderDAL.Context
                     RentInfoId = 1,
                     RentInfoDTO = new RentInfoDTO
                     {
-                        CarId = 1,
+                        CarId = 4,
                         RentBy = 1,
-                        RentFromUTC = DateTime.UtcNow,
-                        RentToUTC = DateTime.UtcNow.AddDays(1),
+                        RentFromUTC = DateTime.UtcNow.AddDays(-2),
+                        RentToUTC = DateTime.UtcNow.AddDays(-1),
+                        RentFinished = DateTime.UtcNow.AddDays(-1)
                     }
                 });
 

@@ -15,7 +15,7 @@ namespace CarCatalogApi.EventConsumers
         private readonly IModel _channel;
 
         public CarRpcConsumer(ILogger<CarRpcConsumer> logger, ICarService carService)
-            : base(logger, "order_events", "car_service_queue")
+            : base(logger, "order_events", "car_service_queue", ExchangeType.Direct)
         {
             _logger = logger;
             this.carService = carService;

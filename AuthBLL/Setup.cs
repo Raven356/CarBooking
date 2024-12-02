@@ -11,8 +11,9 @@ namespace AuthBLL
         {
             AuthDAL.Setup.SetupDALServices(services, connectionString);
 
-            services.AddSingleton<IAuthService, AuthService>();
-            services.AddSingleton<ITokenService, TokenService>();
+            services.AddSingleton<IAuthService, AuthService>()
+                .AddSingleton<ITokenService, TokenService>()
+                .AddSingleton<IUserService, UserService>();
         }
 
         public static void SeedDatabase(AuthContext context)

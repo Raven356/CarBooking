@@ -36,7 +36,8 @@ namespace CarBookingDAL.Context
                 [
                     new CarDTO { CarPlate = "plate1", CarType = carTypeDTO, RentPrice = 2000, Model = carModelDTO },
                     new CarDTO { CarPlate = "plate2", CarType = carTypeDTO, RentPrice = 2000, Model = carModelDTO },
-                    new CarDTO { CarPlate = "plate3", CarType = carTypeDTO, RentPrice = 2000, Model = carModelDTO }
+                    new CarDTO { CarPlate = "plate3", CarType = carTypeDTO, RentPrice = 2000, Model = carModelDTO },
+                    new CarDTO { CarPlate = "plate4", CarType = carTypeDTO, RentPrice = 2000, Model = carModelDTO },
                 ]);
 
                 context.SaveChanges();

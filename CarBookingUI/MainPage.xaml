@@ -6,7 +6,14 @@
 
         <ImageButton Source="menu.png"
              Clicked="OnMenuClicked"
-             AbsoluteLayout.LayoutBounds="2, 0, AutoSize, AutoSize"
+             AbsoluteLayout.LayoutBounds="-1, 0, AutoSize, AutoSize"
+             AbsoluteLayout.LayoutFlags="PositionProportional"
+             Margin="0,0,10,0"
+             HeightRequest= "40"  />
+
+        <ImageButton Source="reload.png"
+             Clicked="OnReloadClicked"
+             AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
              AbsoluteLayout.LayoutFlags="PositionProportional"
              Margin="0,0,10,0"
              HeightRequest= "40"  />

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarBookingUI.Pages.EditUserPage"
+             Title="EditUserPage">
+    <StackLayout Padding="30" Spacing="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Password:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <Entry x:Name="Password" 
+                   IsPassword="True" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Name:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <Entry x:Name="Name" Text="{Binding Name}" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Surname:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <Entry x:Name="Surname" Text="{Binding Surname}" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Phone:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <Entry x:Name="Phone" Text="{Binding Phone}" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Email:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <Entry x:Name="Email" Text="{Binding Email}" />
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+            <Label Text="Date of birth:" 
+                FontSize="16" 
+                VerticalOptions="Center" />
+
+            <DatePicker x:Name="DateOfBirth"
+                   Format="D" 
+                   HorizontalOptions="Start"
+                   Date="{Binding DateOfBirth}" />
+
+        </HorizontalStackLayout>
+
+        <!-- Confirm Button -->
+        <Button Text="Confirm" 
+        HorizontalOptions="Center" 
+        VerticalOptions="End" 
+        Clicked="OnConfirmButtonClicked" />
+
+    </StackLayout>
+</ContentPage>
