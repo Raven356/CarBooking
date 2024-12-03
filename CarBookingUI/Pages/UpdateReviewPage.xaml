@@ -21,7 +21,7 @@
            Grid.Column="1" />
         </Grid>
 
-        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+        <Grid ColumnDefinitions="*,3*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <!-- Label for the rating -->
             <Label Text="Rating:" 
        FontSize="16" 
