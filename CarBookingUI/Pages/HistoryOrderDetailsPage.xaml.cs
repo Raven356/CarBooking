@@ -57,6 +57,18 @@ public partial class HistoryOrderDetailsPage : ContentPage
         }
 	}
 
+    private async void OnWriteOrderButtonClicked(object sender, EventArgs e)
+	{
+        try
+        {
+            await Navigation.PushAsync(new CreateReviewPage(viewModel.Order.CarId));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Something went wrong: {ex.Message}!", "OK");
+        }
+    }
+
     private async void OnEndOrderButtonClicked(object sender, EventArgs e)
 	{
 		try

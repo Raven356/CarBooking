@@ -36,7 +36,7 @@ namespace ReviewApi.Controllers
         {
             var reviews = await reviewService.GetByUserIdAsync(userId);
 
-            return Json(reviews);
+            return Json(new ReviewsCollectionResponse { Reviews = reviews });
         }
 
         [HttpPost("Create")]

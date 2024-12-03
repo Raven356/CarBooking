@@ -53,6 +53,7 @@ namespace OrderApi.Controllers
                 RentFromUTC = order.RentInfo.RentFromUTC,
                 RentToUTC = order.RentInfo.RentToUTC,
                 RentFinished = order.RentInfo.RentFinished,
+                CarId = car.CarId
                 //CarImage = new byte[] {1, 1}
             };
 

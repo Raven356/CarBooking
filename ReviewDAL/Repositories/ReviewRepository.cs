@@ -19,6 +19,7 @@ namespace ReviewDAL.Repositories
 
         public async Task CreateReviewAsync(ReviewDTO reviewDTO)
         {
+            reviewDTO.CreatedDate = DateTime.Now;
             await context.AddAsync(reviewDTO);
             await context.SaveChangesAsync();
         }

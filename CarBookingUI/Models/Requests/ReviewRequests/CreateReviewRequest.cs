@@ -1,9 +1,7 @@
-﻿namespace ReviewBLL.Models
+﻿namespace CarBookingUI.Models.Requests.ReviewRequests
 {
-    public class Review
+    public class CreateReviewRequest
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
 
         public string? Text { get; set; }
@@ -11,7 +9,5 @@
         public int Rating { get; set; }
 
         public int CarId { get; set; }
-
-        public DateTime CreatedDate { get; set; }
     }
 }

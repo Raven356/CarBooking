@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarBookingUI.Pages.CreateReviewPage"
+             Title="CreateReviewPage">
+    <StackLayout Padding="30" Spacing="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+        <Grid ColumnDefinitions="*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+            <Label Text="Here you can live review, and tell about your expereience with order!" 
+               FontSize="16" 
+               VerticalOptions="Center" 
+               Grid.Column="0" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+            <Label Text="Text:" 
+               FontSize="16" 
+               VerticalOptions="Center" 
+               Grid.Column="0" />
+            <Entry x:Name="Text" Text="{Binding Text}" 
+               Grid.Column="1" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+            <!-- Label for the rating -->
+            <Label Text="Rating:" 
+           FontSize="16" 
+           VerticalOptions="Center" 
+           Grid.Column="0" />
+
+            <!-- Star rating input -->
+            <StackLayout Orientation="Horizontal" 
+             Grid.Column="1" 
+             Spacing="5" 
+             HorizontalOptions="Start">
+                <ImageButton Source="{Binding StarImages[0]}" 
+                 Clicked="OnStarClicked" 
+                 CommandParameter="1"
+                 BackgroundColor="Transparent" />
+                <ImageButton Source="{Binding StarImages[1]}" 
+                 Clicked="OnStarClicked" 
+                 CommandParameter="2"
+                 BackgroundColor="Transparent" />
+                <ImageButton Source="{Binding StarImages[2]}" 
+                 Clicked="OnStarClicked" 
+                 CommandParameter="3"
+                 BackgroundColor="Transparent" />
+                <ImageButton Source="{Binding StarImages[3]}" 
+                 Clicked="OnStarClicked" 
+                 CommandParameter="4"
+                 BackgroundColor="Transparent" />
+                <ImageButton Source="{Binding StarImages[4]}" 
+                 Clicked="OnStarClicked" 
+                 CommandParameter="5"
+                 BackgroundColor="Transparent" />
+            </StackLayout>
+        </Grid>
+
+
+        <!-- Confirm Button -->
+        <Button Text="Confirm" 
+            HorizontalOptions="Center" 
+            VerticalOptions="End" 
+            Clicked="OnConfirmButtonClicked" />
+
+    </StackLayout>
+</ContentPage>

@@ -1,9 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ReviewDAL.Models
+﻿namespace CarBookingUI.Models
 {
-    [Table("Review")]
-    public class ReviewDTO
+    public class Review
     {
         public int Id { get; set; }
 

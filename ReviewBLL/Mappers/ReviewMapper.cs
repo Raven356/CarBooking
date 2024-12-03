@@ -23,7 +23,8 @@ namespace ReviewBLL.Mappers
                 Id = review.Id,
                 Rating = review.Rating,
                 Text = review.Text,
-                UserId = review.UserId
+                UserId = review.UserId,
+                CreatedDate = review.CreatedDate
             };
         }
 

@@ -15,5 +15,7 @@ namespace CarCatalogApi.Models
         public double RentPrice { get; set; }
 
         public int? RentBy { get; set; }
+
+        public int CarId { get; set; }
     }
 }

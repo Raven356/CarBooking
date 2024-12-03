@@ -15,5 +15,7 @@
         //public byte[] CarImage { get; set; }
 
         public string CarPlate { get; set; }
+
+        public int CarId { get; set; }
     }
 }

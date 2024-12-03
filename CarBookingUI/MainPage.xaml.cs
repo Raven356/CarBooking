@@ -73,7 +73,7 @@ namespace CarBookingUI
                     await Navigation.PushAsync(new HistoryPage());
                     break;
                 case "Review":
-                    await DisplayAlert("Action", "You selected Option 3", "OK");
+                    await Navigation.PushAsync(new ReviewsPage());
                     break;
                 case "User cabinet":
                     await Navigation.PushAsync(new UserDetailsPage());
