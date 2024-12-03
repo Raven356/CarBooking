@@ -1,4 +1,5 @@
 using CarBookingUI.Helpers;
+using CarBookingUI.Models;
 using CarBookingUI.Models.Responses.ReviewsResponses;
 using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
@@ -19,7 +20,7 @@ public partial class ReviewsPage : ContentPage
 
     private async void OnReviewTapped(object sender, ItemTappedEventArgs e)
     {
-
+        await Navigation.PushAsync(new UpdateReviewPage(((Review)e.Item).Id));
     }
 
     private async void OnMenuClicked(object sender, EventArgs e)

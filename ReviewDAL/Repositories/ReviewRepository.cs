@@ -49,8 +49,11 @@ namespace ReviewDAL.Repositories
 
             if (existingReview != null)
             {
-                // Оновлення полів
-                context.Entry(existingReview).CurrentValues.SetValues(reviewDTO);
+                existingReview.Text = reviewDTO.Text;
+                existingReview.Rating = reviewDTO.Rating;
+                existingReview.CreatedDate = DateTime.Now;
+
+                context.Update(existingReview);
 
                 await context.SaveChangesAsync();
             }

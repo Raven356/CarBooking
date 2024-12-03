@@ -57,7 +57,7 @@ public partial class CreateReviewPage : ContentPage
 
 			var response = await HttpHelper.PostAsJsonAsync($"http://10.0.2.2:8300/review/Create", request);
 
-			if (response.IsSuccessStatusCode) 
+			if (response.IsSuccessStatusCode)
 			{
                 await DisplayAlert("Success", $"Review created successfully!", "OK");
 				await Navigation.PopAsync();

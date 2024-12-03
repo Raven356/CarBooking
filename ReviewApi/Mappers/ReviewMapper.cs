@@ -23,7 +23,6 @@ namespace ReviewApi.Mappers
                 Id = model.Id,
                 Rating = model.Rating,
                 Text = model.Text,
-                UserId = model.UserId
             };
         }
     }
