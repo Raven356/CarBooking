@@ -23,7 +23,7 @@ namespace AuthApi.Mappers
             return new User
             {
                 Id = request.Id,
-                DateOfBirth = DateOnly.FromDateTime(request.DateOfBirth),
+                DateOfBirth = DateOnly.FromDateTime(DateTime.Parse(request.DateOfBirth)),
                 Email = request.Email,
                 Name = request.Name,
                 Password = request.Password,

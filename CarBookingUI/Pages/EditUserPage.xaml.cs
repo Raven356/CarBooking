@@ -37,6 +37,7 @@ public partial class EditUserPage : ContentPage
                 viewModel.Id = user.Id;
                 viewModel.Name = user.Name;
                 viewModel.Phone = user.Phone;
+                DateOfBirth.Date = user.DateOfBirth.ToDateTime(TimeOnly.MinValue);
             }
 			else
 			{
@@ -56,7 +57,7 @@ public partial class EditUserPage : ContentPage
 			var request = new EditUserRequest
 			{
 				Id = viewModel.Id,
-				DateOfBirth = viewModel.DateOfBirth,
+				DateOfBirth = DateOfBirth.Date.ToString(),
 				Email = viewModel.Email,
 				Name = viewModel.Name,
 				Password = viewModel.Password,

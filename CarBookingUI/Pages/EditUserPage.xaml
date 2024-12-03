@@ -5,69 +5,69 @@
              Title="EditUserPage">
     <StackLayout Padding="30" Spacing="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Password:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
-
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
             <Entry x:Name="Password" 
-                   IsPassword="True" />
+                   IsPassword="True"
+                   Grid.Column="1" />
+        </Grid>
 
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Name:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
+            <Entry x:Name="Name" Text="{Binding Name}" 
+                   Grid.Column="1" />
+        </Grid>
 
-            <Entry x:Name="Name" Text="{Binding Name}" />
-
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Surname:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
+            <Entry x:Name="Surname" Text="{Binding Surname}" 
+                   Grid.Column="1" />
+        </Grid>
 
-            <Entry x:Name="Surname" Text="{Binding Surname}" />
-
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Phone:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
+            <Entry x:Name="Phone" Text="{Binding Phone}" 
+                   Grid.Column="1" />
+        </Grid>
 
-            <Entry x:Name="Phone" Text="{Binding Phone}" />
-
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Email:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
+            <Entry x:Name="Email" Text="{Binding Email}" 
+                   Grid.Column="1" />
+        </Grid>
 
-            <Entry x:Name="Email" Text="{Binding Email}" />
-
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="10">
+        <Grid ColumnDefinitions="*,1.5*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Date of birth:" 
-                FontSize="16" 
-                VerticalOptions="Center" />
-
+                   FontSize="16" 
+                   VerticalOptions="Center" 
+                   Grid.Column="0" />
             <DatePicker x:Name="DateOfBirth"
-                   Format="D" 
-                   HorizontalOptions="Start"
-                   Date="{Binding DateOfBirth}" />
-
-        </HorizontalStackLayout>
+                        Format="D" 
+                        HorizontalOptions="Start"
+                        Date="{Binding DateOfBirth}"
+                        Grid.Column="1" />
+        </Grid>
 
         <!-- Confirm Button -->
         <Button Text="Confirm" 
-        HorizontalOptions="Center" 
-        VerticalOptions="End" 
-        Clicked="OnConfirmButtonClicked" />
+                HorizontalOptions="Center" 
+                VerticalOptions="End" 
+                Clicked="OnConfirmButtonClicked" />
 
     </StackLayout>
 </ContentPage>

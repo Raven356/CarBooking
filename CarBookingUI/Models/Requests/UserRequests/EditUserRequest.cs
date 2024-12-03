@@ -14,6 +14,6 @@
 
         public string Email { get; set; }
 
-        public DateOnly DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
     }
 }
