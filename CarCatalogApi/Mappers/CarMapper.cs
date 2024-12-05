@@ -15,7 +15,8 @@ namespace CarCatalogApi.Mappers
                 RentBy = car.RentBy,
                 RentPrice = car.RentPrice,
                 Type = car.CarType.Type,
-                CarId = car.Id
+                CarId = car.Id,
+                Image = car.Image
             };
         }
     }

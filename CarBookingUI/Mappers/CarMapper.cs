@@ -10,7 +10,7 @@ namespace CarBookingUI.Mappers
             return new Car
             {
                 Id = carResponse.Id,
-                ImageSource = "login_icon.png",
+                Image = carResponse.Image,
                 Name = $"{carResponse.CarType.Type} {carResponse.Model.Model} {carResponse.CarPlate}",
                 Price = carResponse.RentPrice.ToString(),
             };

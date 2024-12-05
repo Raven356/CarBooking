@@ -41,6 +41,7 @@ public partial class EditOrderPage : ContentPage
                 viewModel.TimeTo = TimeOnly.FromDateTime(order.RentToUTC);
                 viewModel.Name = $"Chosed car: {order.CarPlate}";
                 viewModel.Description = "Here you can choose new time for your order.";
+                viewModel.Image = order.Image;
             }
             else
             {

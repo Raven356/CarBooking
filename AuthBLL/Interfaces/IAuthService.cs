@@ -8,6 +8,6 @@ namespace AuthBLL.Interfaces
 
         public Task<bool> Login(User user);
 
-        public void Logout();
+        public Task Logout(int userId);
     }
 }

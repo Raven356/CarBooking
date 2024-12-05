@@ -19,27 +19,48 @@ public partial class ReviewsPage : ContentPage
 
     private async void OnReviewTapped(object sender, ItemTappedEventArgs e)
     {
-        await Navigation.PushAsync(new UpdateReviewPage(((Review)e.Item).Id));
+        await Navigation.PushAsync(new UpdateReviewPage(((Review)e.Item).Id, ((Review)e.Item).OrderId));
     }
 
     private async void OnMenuClicked(object sender, EventArgs e)
     {
-        string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Logout", "Main page", "Review");
+        string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Logout", "Main page", "Order history");
 
         switch (action)
         {
             case "Logout":
-                await DisplayAlert("Action", "You selected Logout", "OK");
+                await Logout();
+                await Navigation.PopToRootAsync();
                 break;
             case "Main page":
                 await Navigation.PushAsync(new MainPage());
                 break;
-            case "Review":
-                await DisplayAlert("Action", "You selected Option 3", "OK");
+            case "Order history":
+                await Navigation.PushAsync(new HistoryPage());
                 break;
             default:
                 // Cancel or null case
                 break;
+        }
+    }
+
+    private async Task Logout()
+    {
+        try
+        {
+            var response = await HttpHelper.PostAsync($"http://10.0.2.2:8300/api/v1/Auth/logout?userId={await SecureStorage.GetAsync("userId")}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ArgumentException($"Error, status code: {response.StatusCode}");
+            }
+            else
+            {
+                SecureStorage.RemoveAll();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
         }
     }
 

@@ -41,5 +41,13 @@ namespace AuthApi.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromQuery] int userId)
+        {
+            await authService.Logout(userId);
+
+            return Ok();
+        }
     }
 }

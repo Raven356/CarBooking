@@ -1,6 +1,7 @@
 using CarBookingUI.Helpers;
 using CarBookingUI.Models;
 using CarBookingUI.Models.Requests.ReviewRequests;
+using CarBookingUI.Models.Responses.OrderResponse;
 using CarBookingUI.ViewModels;
 using Newtonsoft.Json;
 
@@ -10,16 +11,19 @@ public partial class UpdateReviewPage : ContentPage
 {
 	private readonly EditReviewViewModel viewModel;
 
-	public UpdateReviewPage(int orderId)
+	public UpdateReviewPage(int reviewId, int orderId)
 	{
 		InitializeComponent();
-		viewModel = new EditReviewViewModel(orderId);
+		viewModel = new EditReviewViewModel(reviewId);
+		viewModel.OrderId = orderId;
 		BindingContext = viewModel;
 	}
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+		await GetOrder();
 
 		try
 		{
@@ -42,6 +46,29 @@ public partial class UpdateReviewPage : ContentPage
 		}
 		catch (Exception ex)
 		{
+            await DisplayAlert("Error", $"Something went wrong: {ex.Message}!", "OK");
+        }
+    }
+
+	private async Task GetOrder()
+	{
+		try
+		{
+            var response = await HttpHelper.GetAsync($"http://10.0.2.2:8300/order/GetOrderById?orderId={viewModel.OrderId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var order = JsonConvert.DeserializeObject<OrderCarResponse>(content);
+
+				viewModel.Image = order.Image;
+            }
+            else
+            {
+                throw new ArgumentException($"Error status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
             await DisplayAlert("Error", $"Something went wrong: {ex.Message}!", "OK");
         }
     }

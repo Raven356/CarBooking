@@ -53,8 +53,8 @@ namespace OrderApi.Controllers
                 RentFromUTC = order.RentInfo.RentFromUTC,
                 RentToUTC = order.RentInfo.RentToUTC,
                 RentFinished = order.RentInfo.RentFinished,
-                CarId = car.CarId
-                //CarImage = new byte[] {1, 1}
+                CarId = car.CarId,
+                Image = car.Image
             };
 
             return Ok(response);
@@ -66,8 +66,7 @@ namespace OrderApi.Controllers
             var orderEvent = new OrderStartedEvent { CarId = createOrderRequest.CarId, UserId = createOrderRequest.UserId };
 
             var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
-            //rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(createOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
-            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", 60000);
+            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(createOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
 
             PublishTimedHistoryEvent(orderEvent);
 
@@ -112,8 +111,7 @@ namespace OrderApi.Controllers
             PublishTimedHistoryEvent(orderEvent);
 
             var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
-            //rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(createOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
-            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", 5000);
+            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(editOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
 
             return Ok();
         }

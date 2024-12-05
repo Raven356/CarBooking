@@ -9,6 +9,7 @@
         private TimeOnly timeTo;
         private DateTime dateFrom;
         private TimeOnly timeFrom;
+        private byte[] image;
 
         public int OrderId { get => orderId; set {  orderId = value; OnPropertyChanged(); } }
 
@@ -23,5 +24,7 @@
         public DateTime DateFrom { get => dateFrom; set { dateFrom = value; OnPropertyChanged(); } }
 
         public TimeOnly TimeFrom { get => timeFrom; set { timeFrom = value; OnPropertyChanged(); } }
+
+        public byte[] Image { get => image; set { image = value; OnPropertyChanged(); } }
     }
 }

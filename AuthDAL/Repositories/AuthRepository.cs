@@ -40,9 +40,14 @@ namespace AuthDAL.Repositories
             return false;
         }
 
-        public void Logout()
+        public async Task Logout(int userId)
         {
-            throw new NotImplementedException();
+            var existingToken = await authContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId);
+
+            if (existingToken != null)
+            {
+                authContext.Tokens.Remove(existingToken);
+            }
         }
 
         public async Task Register(UserDTO userDTO)

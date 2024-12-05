@@ -8,7 +8,7 @@ namespace AuthDAL.Interfaces
 
         public Task<bool> Login(UserDTO userDTO);
 
-        public void Logout();
+        public Task Logout(int userId);
 
         public Task<UserDTO?> GetUserByIdAsync(int id);
 

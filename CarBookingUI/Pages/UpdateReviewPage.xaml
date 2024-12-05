@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:CarBookingUI.Converters;assembly=CarBookingUI"
              x:Class="CarBookingUI.Pages.UpdateReviewPage"
              Title="UpdateReviewPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <StackLayout Padding="30" Spacing="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
+
+        <Image Source="{Binding Image, Converter={StaticResource ByteArrayToImageSourceConverter}}" 
+           HorizontalOptions="Center" 
+           VerticalOptions="CenterAndExpand" 
+           WidthRequest="200" 
+           HeightRequest="150" />
+        
         <Grid ColumnDefinitions="*" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
             <Label Text="Here you can edit your review!" 
            FontSize="16" 

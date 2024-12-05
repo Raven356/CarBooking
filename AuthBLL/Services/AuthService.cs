@@ -19,9 +19,9 @@ namespace AuthBLL.Services
             return await authRepository.Login(AuthMapper.Map(user));
         }
 
-        public void Logout()
+        public async Task Logout(int userId)
         {
-            authRepository.Logout();
+            await authRepository.Logout(userId);
         }
 
         public async Task Register(User user)

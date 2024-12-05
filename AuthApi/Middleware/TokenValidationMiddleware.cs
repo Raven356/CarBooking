@@ -17,7 +17,9 @@ namespace AuthApi.Middleware
         {
             if (context.Request.Path.StartsWithSegments("/api/v1/auth") || context.Request.Path.StartsWithSegments("/swagger")
                 || context.Request.Path.StartsWithSegments("/api/v1/user")
-                || context.Request.Path.StartsWithSegments("/car/GetAll"))
+                || context.Request.Path.StartsWithSegments("/car/GetAll")
+                || context.Request.Path.StartsWithSegments("/car/GetAllModels")
+                || context.Request.Path.StartsWithSegments("/car/GetAllTypes"))
             {
                 await _next(context);
                 return;

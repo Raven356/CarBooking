@@ -7,6 +7,13 @@ namespace CarBookingUI.ViewModels
         private string text;
         private int userId;
         private int rating;
+        private byte[] image;
+
+        public byte[] Image
+        {
+            get => image;
+            set { image = value; OnPropertyChanged(); }
+        }
 
         public int OrderId
         {

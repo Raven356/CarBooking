@@ -17,5 +17,7 @@ namespace CarCatalogApi.Models
         public int? RentBy { get; set; }
 
         public int CarId { get; set; }
+
+        public byte[] Image { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 
         public DateTime? RentFinished { get; set; }
 
-        //public byte[] CarImage { get; set; }
+        public byte[] Image { get; set; }
 
         public string CarPlate { get; set; }
 

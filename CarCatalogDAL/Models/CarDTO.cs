@@ -20,5 +20,7 @@ namespace CarBookingDAL.Models
         public double RentPrice { get; set; }
 
         public int? RentBy { get; set; }
+
+        public byte[] Image { get; set; }
     }
 }

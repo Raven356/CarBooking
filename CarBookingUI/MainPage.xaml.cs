@@ -63,10 +63,11 @@ namespace CarBookingUI
 
         private async void OnCarTapped(object sender, ItemTappedEventArgs e)
         {
-            //if (viewModel.IsAuthVisible)
-            //{
-            //    await DisplayAlert("Unauthorized!", "Authorize to interact with app!", "Ok!");
-            //}
+            if (viewModel.IsAuthVisible)
+            {
+                await DisplayAlert("Unauthorized!", "Authorize to interact with app!", "Ok!");
+                return;
+            }
 
             if (e.Item is Car selectedCar)
             {
@@ -74,7 +75,8 @@ namespace CarBookingUI
                 {
                     CarId = selectedCar.Id,
                     Description = $"Are you sure you want to proceed with ordering car {selectedCar.Name} for price {selectedCar.Price}",
-                    Name = selectedCar.Name
+                    Name = selectedCar.Name,
+                    Image = selectedCar.Image
                 };
 
                 await Navigation.PushAsync(new OrderPage(viewModel));
@@ -115,25 +117,61 @@ namespace CarBookingUI
 
         private async void OnMenuClicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("Choose an action", "Cancel", null, "Login", "Order history", "Review", "User cabinet");
+            string action = await DisplayActionSheet("Choose an action", "Cancel", null, viewModel.IsAuthVisible ? "Login" : "Logout", "Order history", "Review", "User cabinet");
 
             switch (action)
             {
+                case "Logout":
+                    await Logout();
+                    break;
                 case "Login":
                     await OnLoginClicked();
                     break;
                 case "Order history":
+                    if (viewModel.IsAuthVisible)
+                    {
+                        await DisplayAlert("Unauthorized!", "Authorize to interact with app!", "Ok!");
+                        return;
+                    }
                     await Navigation.PushAsync(new HistoryPage());
                     break;
                 case "Review":
+                    if (viewModel.IsAuthVisible)
+                    {
+                        await DisplayAlert("Unauthorized!", "Authorize to interact with app!", "Ok!");
+                        return;
+                    }
                     await Navigation.PushAsync(new ReviewsPage());
                     break;
                 case "User cabinet":
+                    if (viewModel.IsAuthVisible)
+                    {
+                        await DisplayAlert("Unauthorized!", "Authorize to interact with app!", "Ok!");
+                        return;
+                    }
                     await Navigation.PushAsync(new UserDetailsPage());
                     break;
                 default:
                     // Cancel or null case
                     break;
+            }
+        }
+
+        private async Task Logout()
+        {
+            try
+            {
+                var response = await HttpHelper.PostAsync($"http://10.0.2.2:8300/api/v1/Auth/logout?userId={await SecureStorage.GetAsync("userId")}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new ArgumentException($"Error, status code: {response.StatusCode}");
+                }
+                SecureStorage.RemoveAll();
+                viewModel.IsAuthVisible = true;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
             }
         }
 
@@ -203,8 +241,7 @@ namespace CarBookingUI
                         )
                     );
 
-                    viewModel.IsAuthVisible = true;
-                    //viewModel.IsAuthVisible = SecureStorage.GetAsync("auth_token").GetAwaiter().GetResult() == null;
+                    viewModel.IsAuthVisible = SecureStorage.GetAsync("auth_token").GetAwaiter().GetResult() == null;
                 }
             }
             catch (Exception ex)

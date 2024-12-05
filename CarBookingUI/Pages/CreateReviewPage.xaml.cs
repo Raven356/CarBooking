@@ -1,8 +1,6 @@
 using CarBookingUI.Helpers;
 using CarBookingUI.Models.Requests.ReviewRequests;
-using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
-using Newtonsoft.Json;
 
 namespace CarBookingUI.Pages;
 
@@ -10,10 +8,11 @@ public partial class CreateReviewPage : ContentPage
 {
 	private readonly CreateReviewViewModel viewModel;
 
-	public CreateReviewPage(int orderId)
+	public CreateReviewPage(int orderId, byte[] image)
 	{
 		InitializeComponent();
 		viewModel = new CreateReviewViewModel(orderId);
+        viewModel.Image = image;
 
 		BindingContext = viewModel;
 	}
