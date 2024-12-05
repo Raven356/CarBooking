@@ -1,5 +1,6 @@
 using CarBookingDAL.Context;
 using CarCatalogApi.EventConsumers;
+using CarCatalogApi.EventPublishers;
 using RabbitMqLibrary.TimedRoutine;
 
 namespace CarCatalogApi
@@ -17,7 +18,8 @@ namespace CarCatalogApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton<TimedEventHistoryPublisher>();
+            builder.Services.AddSingleton<TimedEventHistoryPublisher>()
+                .AddSingleton<CarEventsPubisher>();
 
             RegisterEventConsumers(builder.Services);
 

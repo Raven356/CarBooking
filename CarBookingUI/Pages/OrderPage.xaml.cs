@@ -1,8 +1,6 @@
 using CarBookingUI.Helpers;
 using CarBookingUI.Models.Requests.OrderRequests;
-using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
-using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBookingUI.Pages;
@@ -33,31 +31,24 @@ public partial class OrderPage : ContentPage
 
             if (ValidateToDate(selectedFromDateTime, selectedDateTimeTo))
             {
-                var userResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/api/v1/User/GetUserIdByToken?token={await SecureStorage.GetAsync("auth_token")}");
-                if (userResponse.IsSuccessStatusCode)
+                var request = new CreateOrderRequest
                 {
-                    var responseContent = await userResponse.Content.ReadAsStringAsync();
-                    var userIdResponse = JsonConvert.DeserializeObject<UserIdResponse>(responseContent);
+                    CarId = carId,
+                    DateTo = selectedDateTimeTo,
+                    UserId = int.Parse(await SecureStorage.GetAsync("userId")),
+                    DateFrom = selectedFromDateTime
+                };
 
-                    var request = new CreateOrderRequest
-                    {
-                        CarId = carId,
-                        DateTo = selectedDateTimeTo,
-                        UserId = userIdResponse.UserId,
-                        DateFrom = selectedFromDateTime
-                    };
+                var orderResponse = await HttpHelper.PostAsJsonAsync($"http://10.0.2.2:8300/order/CreateOrder", request);
 
-                    var orderResponse = await HttpHelper.PostAsJsonAsync($"http://10.0.2.2:8300/order/CreateOrder", request);
-
-                    if (orderResponse.IsSuccessStatusCode)
-                    {
-                        await DisplayAlert("Order Created", "Your car has been booked!", "OK");
-                        await Navigation.PushAsync(new MainPage());
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Order request had errors!");
-                    }
+                if (orderResponse.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Order Created", "Your car has been booked!", "OK");
+                    await Navigation.PushAsync(new MainPage());
+                }
+                else
+                {
+                    throw new ArgumentException("Order request had errors!");
                 }
             }
         }

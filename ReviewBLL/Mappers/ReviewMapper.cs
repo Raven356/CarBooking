@@ -12,7 +12,9 @@ namespace ReviewBLL.Mappers
                 Id = review.Id,
                 Rating = review.Rating,
                 Text = review.Text,
-                UserId = review.UserId
+                UserId = review.UserId,
+                OrderId = review.OrderId,
+                CreatedDate = review.CreatedDate,
             };
         }
 
@@ -24,7 +26,8 @@ namespace ReviewBLL.Mappers
                 Rating = review.Rating,
                 Text = review.Text,
                 UserId = review.UserId,
-                CreatedDate = review.CreatedDate
+                CreatedDate = review.CreatedDate,
+                OrderId = review.OrderId,
             };
         }
 

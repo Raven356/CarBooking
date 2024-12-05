@@ -14,13 +14,23 @@ namespace CarBookingBLL.Services
             this.carRepository = carRepository;
         }
 
-        public IEnumerable<Car> GetAll()
+        public async Task<IEnumerable<Car>> GetAllAsymc(string? type, string? fromPrice, string? toPrice, string? model)
         {
-            var carsDto = carRepository.GetAll();
+            var carsDto = await carRepository.GetAllAsync(type, fromPrice, toPrice, model);
 
             var cars = CarMapper.Map(carsDto);
 
             return cars;
+        }
+
+        public async Task<IEnumerable<string>> GetAllModelsAsync()
+        {
+            return await carRepository.GetAllModelsAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAllTypesAsync()
+        {
+            return await carRepository.GetAllTypesAsync();
         }
 
         public async Task<Car> GetByIdAsync(int carId)

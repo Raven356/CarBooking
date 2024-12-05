@@ -1,7 +1,6 @@
 using CarBookingUI.Helpers;
 using CarBookingUI.Models;
 using CarBookingUI.Models.Responses.ReviewsResponses;
-using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
 using Newtonsoft.Json;
 
@@ -50,28 +49,17 @@ public partial class ReviewsPage : ContentPage
 
         try
         {
-            var userResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/api/v1/User/GetUserByToken?token={await SecureStorage.GetAsync("auth_token")}");
-            if (userResponse.IsSuccessStatusCode)
+            var reviewsResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/review/GetByUserId?userId={await SecureStorage.GetAsync("userId")}");
+            if (reviewsResponse.IsSuccessStatusCode)
             {
-                var content = await userResponse.Content.ReadAsStringAsync();
-                var user = JsonConvert.DeserializeObject<UserDetailsResponse>(content);
+                var reviewContent = await reviewsResponse.Content.ReadAsStringAsync();
+                var reviews = JsonConvert.DeserializeObject<ReviewsCollectionResponse>(reviewContent);
 
-                var reviewsResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/review/GetByUserId?userId={user.Id}");
-                if (reviewsResponse.IsSuccessStatusCode)
-                {
-                    var reviewContent = await reviewsResponse.Content.ReadAsStringAsync();
-                    var reviews = JsonConvert.DeserializeObject<ReviewsCollectionResponse>(reviewContent);
-
-                    viewModel.Reviews = new System.Collections.ObjectModel.ObservableCollection<Models.Review>(reviews.Reviews);
-                }
-                else
-                {
-                    throw new ArgumentException($"Error, status code: {reviewsResponse.StatusCode}");
-                }
+                viewModel.Reviews = new System.Collections.ObjectModel.ObservableCollection<Models.Review>(reviews.Reviews);
             }
             else
             {
-                throw new ArgumentException($"Error, status code: {userResponse.StatusCode}");
+                throw new ArgumentException($"Error, status code: {reviewsResponse.StatusCode}");
             }
         }
         catch (Exception ex)

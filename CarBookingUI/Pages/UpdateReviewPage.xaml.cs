@@ -33,7 +33,7 @@ public partial class UpdateReviewPage : ContentPage
 				viewModel.Rating = review.Rating;
 				viewModel.Text = review.Text;
 				viewModel.UserId = review.UserId;
-				viewModel.CarId = review.CarId;
+				viewModel.OrderId = review.OrderId;
 			}
 			else
 			{

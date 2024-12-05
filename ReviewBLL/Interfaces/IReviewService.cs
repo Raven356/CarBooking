@@ -13,5 +13,7 @@ namespace ReviewBLL.Interfaces
         public Task<Review?> GetByIdAsync(int id);
 
         public Task UpdateReviewAsync(Review review);
+
+        Task<Review> GetByOrderIdAsync(int orderId);
     }
 }

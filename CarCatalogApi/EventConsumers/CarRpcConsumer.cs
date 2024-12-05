@@ -56,11 +56,5 @@ namespace CarCatalogApi.EventConsumers
 
             await Task.CompletedTask;
         }
-
-        private IModel CreateChannel()
-        {
-            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };
-            return factory.CreateConnection().CreateModel();
-        }
     }
 }

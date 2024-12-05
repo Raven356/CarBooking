@@ -39,6 +39,14 @@ namespace ReviewApi.Controllers
             return Json(new ReviewsCollectionResponse { Reviews = reviews });
         }
 
+        [HttpGet("GetByOrderId")]
+        public async Task<IActionResult> GetByOrderId([FromQuery] int orderId)
+        {
+            var order = await reviewService.GetByOrderIdAsync(orderId);
+
+            return Json(order);
+        }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create(CreateReviewModel createReviewModel)
         {

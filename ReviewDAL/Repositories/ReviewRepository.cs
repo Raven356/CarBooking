@@ -36,6 +36,13 @@ namespace ReviewDAL.Repositories
             return review;
         }
 
+        public async Task<ReviewDTO> GetByOrderIdAsync(int orderId)
+        {
+            var review = await context.Reviews.FirstOrDefaultAsync(rev => rev.OrderId == orderId);
+
+            return review;
+        }
+
         public async Task<IEnumerable<ReviewDTO>> GetByUserIdAsync(int userId)
         {
             var reviews = await context.Reviews.Where(rev => rev.UserId == userId).ToListAsync();

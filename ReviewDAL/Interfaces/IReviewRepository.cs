@@ -13,5 +13,7 @@ namespace ReviewDAL.Interfaces
         public Task<ReviewDTO?> GetByIdAsync(int id);
 
         public Task UpdateReviewAsync(ReviewDTO reviewDTO);
+
+        Task<ReviewDTO> GetByOrderIdAsync(int orderId);
     }
 }

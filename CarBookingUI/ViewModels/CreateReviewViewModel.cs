@@ -8,7 +8,7 @@ namespace CarBookingUI.ViewModels
         private int userId;
         private int rating;
 
-        public int CarId
+        public int OrderId
         {
             get => carId;
             set { carId = value; OnPropertyChanged(); }

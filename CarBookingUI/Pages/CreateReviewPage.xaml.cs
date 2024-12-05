@@ -10,10 +10,10 @@ public partial class CreateReviewPage : ContentPage
 {
 	private readonly CreateReviewViewModel viewModel;
 
-	public CreateReviewPage(int carId)
+	public CreateReviewPage(int orderId)
 	{
 		InitializeComponent();
-		viewModel = new CreateReviewViewModel(carId);
+		viewModel = new CreateReviewViewModel(orderId);
 
 		BindingContext = viewModel;
 	}
@@ -22,25 +22,7 @@ public partial class CreateReviewPage : ContentPage
     {
         base.OnAppearing();
 
-		try
-		{
-            var userResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/api/v1/User/GetUserByToken?token={await SecureStorage.GetAsync("auth_token")}");
-			if (userResponse.IsSuccessStatusCode)
-			{
-                var content = await userResponse.Content.ReadAsStringAsync();
-                var user = JsonConvert.DeserializeObject<UserDetailsResponse>(content);
-
-				viewModel.UserId = user.Id;
-            }
-			else
-			{
-				throw new ArgumentException($"Error, status code: {userResponse.StatusCode}");
-			}
-        }
-		catch (Exception ex)
-		{
-            await DisplayAlert("Error", $"Something went wrong: {ex.Message}!", "OK");
-        }
+        viewModel.UserId = int.Parse(await SecureStorage.GetAsync("userId"));
     }
 
     private async void OnConfirmButtonClicked(object sender, EventArgs e)
@@ -50,7 +32,7 @@ public partial class CreateReviewPage : ContentPage
 			var request = new CreateReviewRequest
 			{
 				UserId = viewModel.UserId,
-				CarId = viewModel.CarId,
+				OrderId = viewModel.OrderId,
 				Rating = viewModel.Rating,
 				Text = Text.Text
 			};

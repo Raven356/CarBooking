@@ -13,7 +13,7 @@ namespace ReviewDAL.Models
 
         public int Rating { get; set; }
 
-        public int CarId { get; set; }
+        public int OrderId { get; set; }
 
         public DateTime CreatedDate { get; set; }
     }

@@ -1,4 +1,5 @@
 
+using OrderApi.EventConsumers;
 using OrderApi.EventPublisher;
 using OrderDAL.Context;
 using RabbitMqLibrary.TimedRoutine;
@@ -17,9 +18,10 @@ namespace OrderApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<OrderEventsPublisher>();
-            builder.Services.AddSingleton<OrderEventsTimeoutPublisher>();
-            builder.Services.AddSingleton<TimedEventHistoryPublisher>();
+
+            ConfigureEventPublisher(builder.Services);
+
+            ConfigureEventConsumers(builder.Services);
 
             OrderBLL.Setup.SetupBLLServices(builder.Services, builder.Configuration["ConnectionString"]);
 
@@ -55,10 +57,21 @@ namespace OrderApi
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ConfigureEventConsumers(IServiceCollection services)
+        {
+            services.AddHostedService<OrderRpcConsumer>();
+        }
+
+        private static void ConfigureEventPublisher(IServiceCollection services)
+        {
+            services.AddSingleton<OrderEventsPublisher>()
+                .AddSingleton<OrderEventsTimeoutPublisher>()
+                .AddSingleton<TimedEventHistoryPublisher>();
         }
     }
 }

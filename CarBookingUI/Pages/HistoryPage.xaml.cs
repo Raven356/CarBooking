@@ -2,7 +2,6 @@ using CarBookingUI.Helpers;
 using CarBookingUI.Mappers;
 using CarBookingUI.Models;
 using CarBookingUI.Models.Responses.OrderResponse;
-using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.ViewModels;
 using Newtonsoft.Json;
 
@@ -25,21 +24,14 @@ public partial class HistoryPage : ContentPage
 
         try
         {
-            var userResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/api/v1/User/GetUserIdByToken?token={await SecureStorage.GetAsync("auth_token")}");
-            if (userResponse.IsSuccessStatusCode)
+            var response = await HttpHelper.GetAsync($"http://10.0.2.2:8300/order/GetByUserId?userId={await SecureStorage.GetAsync("userId")}");
+
+            if (response.IsSuccessStatusCode)
             {
-                var responseContent = await userResponse.Content.ReadAsStringAsync();
-                var userIdResponse = JsonConvert.DeserializeObject<UserIdResponse>(responseContent);
+                var orderContent = await response.Content.ReadAsStringAsync();
+                var orderResponse = JsonConvert.DeserializeObject<IEnumerable<OrderModel>>(orderContent);
 
-                var response = await HttpHelper.GetAsync($"http://10.0.2.2:8300/order/GetByUserId?userId={userIdResponse.UserId}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var orderContent = await response.Content.ReadAsStringAsync();
-                    var orderResponse = JsonConvert.DeserializeObject<IEnumerable<OrderModel>>(orderContent);
-
-                    viewModel.Orders = new System.Collections.ObjectModel.ObservableCollection<Models.Order>(OrderMapper.Map(orderResponse));
-                }
+                viewModel.Orders = new System.Collections.ObjectModel.ObservableCollection<Models.Order>(OrderMapper.Map(orderResponse));
             }
         }
         catch (Exception ex) 

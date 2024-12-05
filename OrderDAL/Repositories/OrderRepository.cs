@@ -63,6 +63,16 @@ namespace OrderDAL.Repositories
             return order;
         }
 
+        public async Task<IEnumerable<RentOrderDTO>> GetByUserId(int userId)
+        {
+            var orders = await context.RentOrder
+                .Include(o => o.RentInfoDTO)
+                .Where(o => o.RentInfoDTO.RentBy == userId)
+                .ToListAsync();
+
+            return orders;
+        }
+
         public async Task<IEnumerable<RentOrderDTO>> GetRentOrdersByUserIdAsync(int userId)
         {
             var orders = await context.RentOrder

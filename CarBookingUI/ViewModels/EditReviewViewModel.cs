@@ -18,7 +18,7 @@
             }
         }
 
-        public int CarId
+        public int OrderId
         {
             get => carId;
             set { carId = value; OnPropertyChanged(); }

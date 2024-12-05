@@ -2,9 +2,13 @@
 using CarBookingUI.Mappers;
 using CarBookingUI.Models;
 using CarBookingUI.Models.Responses.CarResponses;
+using CarBookingUI.Models.Responses.UserResponses;
 using CarBookingUI.Pages;
+using CarBookingUI.Popups;
 using CarBookingUI.ViewModels;
+using CommunityToolkit.Maui.Views;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace CarBookingUI
 {
@@ -24,7 +28,32 @@ namespace CarBookingUI
         {
             base.OnAppearing();
 
+            await GetUserIdAsync();
+
             await GetCarCollectionAsync();
+        }
+
+        private async Task GetUserIdAsync()
+        {
+            if (await SecureStorage.GetAsync("userId") == null)
+            {
+                try
+                {
+                    var userResponse = await HttpHelper.GetAsync($"http://10.0.2.2:8300/api/v1/User/GetUserIdByToken?token={await SecureStorage.GetAsync("auth_token")}");
+                    if (userResponse.IsSuccessStatusCode)
+                    {
+                        var responseContent = await userResponse.Content.ReadAsStringAsync();
+                        var userIdResponse = JsonConvert.DeserializeObject<UserIdResponse>(responseContent);
+
+                        await SecureStorage.SetAsync("userId", userIdResponse.UserId.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Thread.Sleep(15000);
+                    await GetUserIdAsync();
+                }
+            }
         }
 
         private async Task OnLoginClicked()
@@ -57,7 +86,31 @@ namespace CarBookingUI
 
         private async void OnReloadClicked(object sender, EventArgs e)
         {
+            await GetUserIdAsync();
             await GetCarCollectionAsync();
+        }
+
+        private async void OnFilterClicked(object sender, EventArgs e)
+        {
+            var models = await GetModelsCollectionAsync();
+            var types = await GetTypesCollectionAsync();
+
+            if (models != null && types != null)
+            {
+                var popup = new CarFilterPopup(models, types);
+                var result = await this.ShowPopupAsync(popup);
+
+                if (result is not null)
+                {
+                    var filters = (dynamic)result;
+
+                    await GetCarCollectionAsync(filters.Type, filters.PriceFrom, filters.PriceTo, filters.Model);
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "Models ot types were null", "Ok");
+            }
         }
 
         private async void OnMenuClicked(object sender, EventArgs e)
@@ -84,16 +137,67 @@ namespace CarBookingUI
             }
         }
 
-        private async Task GetCarCollectionAsync()
+        private async Task<IEnumerable<string>> GetTypesCollectionAsync()
         {
             try
             {
-                var response = HttpHelper.Get("http://10.0.2.2:8300/car/GetAll");
+                var response = await HttpHelper.GetAsync("http://10.0.2.2:8300/car/GetAllTypes");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    viewModel.Cars = new System.Collections.ObjectModel.ObservableCollection<Car>(
+
+                    return JsonConvert.DeserializeObject<IEnumerable<string>>(content);
+                }
+                else
+                {
+                    throw new ArgumentException($"Error, status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+            }
+
+            return null;
+        }
+
+        private async Task<IEnumerable<string>> GetModelsCollectionAsync()
+        {
+            try
+            {
+                var response = await HttpHelper.GetAsync("http://10.0.2.2:8300/car/GetAllModels");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    return JsonConvert.DeserializeObject<IEnumerable<string>>(content);
+                }
+                else
+                {
+                    throw new ArgumentException($"Error, status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex) 
+            {
+                await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+            }
+
+            return null;
+        }
+
+        private async Task GetCarCollectionAsync(string? type = null, string? fromPrice = null, string? toPrice = null, string? model = null)
+        {
+            try
+            {
+                var response = await HttpHelper.GetAsync($"http://10.0.2.2:8300/car/GetAll?type={type}&fromPrice={fromPrice}" +
+                    $"&toPrice={toPrice}&model={model}&userId={await SecureStorage.GetAsync("userId")}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    viewModel.Cars = new ObservableCollection<Car>(
                         CarMapper.Map(
                             JsonConvert.DeserializeObject<IEnumerable<CarResponse>>(content)
                         )
@@ -105,7 +209,7 @@ namespace CarBookingUI
             }
             catch (Exception ex)
             {
-                DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK").GetAwaiter();
+                await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
             }
         }
     }

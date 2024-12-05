@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="CarBookingUI.Popups.CarFilterPopup">
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Filter Options" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+
+        <Picker Title="Select Model" ItemsSource="{Binding Models}" SelectedItem="{Binding SelectedModel}" />
+
+        <Entry Placeholder="Price From" Keyboard="Numeric" Text="{Binding PriceFrom}" />
+        <Entry Placeholder="Price To" Keyboard="Numeric" Text="{Binding PriceTo}" />
+
+        <Picker Title="Select Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" />
+
+        <Button Text="Apply Filter" Command="{Binding ApplyFilterCommand}" />
+        <Button Text="Cancel" Command="{Binding CloseCommand}" />
+    </VerticalStackLayout>
+</toolkit:Popup>

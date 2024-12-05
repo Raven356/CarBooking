@@ -30,6 +30,12 @@ namespace ReviewBLL.Services
             return review == null ? null : ReviewMapper.Map(review);
         }
 
+        public async Task<Review> GetByOrderIdAsync(int orderId)
+        {
+            var review = await repository.GetByOrderIdAsync(orderId);
+            return review != null ? ReviewMapper.Map(review) : null;
+        }
+
         public async Task<IEnumerable<Review>> GetByUserIdAsync(int userId)
         {
             return ReviewMapper.Map(await repository.GetByUserIdAsync(userId));

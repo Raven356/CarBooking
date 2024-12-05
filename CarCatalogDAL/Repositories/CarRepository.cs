@@ -16,14 +16,53 @@ namespace CarBookingDAL.Repositories
             context = scope.ServiceProvider.GetRequiredService<CarCatalogContext>();
         }
 
-        public IEnumerable<CarDTO> GetAll()
+        public async Task<IEnumerable<CarDTO>> GetAllAsync(string? type, string? fromPrice, string? toPrice, string? model)
         {
-            var cars = context.CarDTOs
+            var cars = await context.CarDTOs
                 .Where(car => car.RentBy == null)
                 .Include(car => car.CarType)
-                .Include(car => car.Model);
+                .Include(car => car.Model)
+                .ToListAsync();
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                cars = cars.Where(car => car.CarType.Type == type)
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(fromPrice)) 
+            {
+                cars = cars.Where(car => car.RentPrice >= (fromPrice == null ? 0 : double.Parse(fromPrice)))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(toPrice))
+            {
+                cars = cars.Where(car => car.RentPrice <= (toPrice == null ? 0 : double.Parse(toPrice)))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(model))
+            {
+                cars = cars.Where(car => car.Model.Model == model)
+                    .ToList();
+            }
 
             return cars;
+        }
+
+        public async Task<IEnumerable<string>> GetAllModelsAsync()
+        {
+            return await context.CarModelDTOs
+                .Select(model => model.Model)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAllTypesAsync()
+        {
+            return await context.CarTypeDTOs
+                .Select(type => type.Type)
+                .ToListAsync();
         }
 
         public async Task<CarDTO> GetCarByIdAsync(int carId)

@@ -8,5 +8,12 @@
 
             MainPage = new AppShell();
         }
+
+        protected override void OnSleep()
+        {
+            SecureStorage.RemoveAll();
+
+            base.OnSleep();
+        }
     }
 }

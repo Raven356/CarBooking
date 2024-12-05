@@ -13,7 +13,7 @@ namespace TimedEventsApi.EventConsumers
         private readonly ILogger<GetTimedEventRpcConsumer> _logger;
 
         public GetTimedEventRpcConsumer(ILogger<GetTimedEventRpcConsumer> logger) 
-            : base(logger, "timed_events", "get_history_event", "direct", null)
+            : base(logger, "timed_events", "get_history_event", "direct")
         {
             _channel = CreateChannel();
             this._logger = logger;
@@ -56,12 +56,6 @@ namespace TimedEventsApi.EventConsumers
             }
 
             await Task.CompletedTask;
-        }
-
-        private IModel CreateChannel()
-        {
-            var factory = new ConnectionFactory() { HostName = "rabbitmq", Port = 5672 };
-            return factory.CreateConnection().CreateModel();
         }
     }
 }

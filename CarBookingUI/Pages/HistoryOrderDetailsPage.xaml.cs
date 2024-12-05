@@ -1,4 +1,5 @@
 using CarBookingUI.Helpers;
+using CarBookingUI.Models;
 using CarBookingUI.Models.Requests.OrderRequests;
 using CarBookingUI.Models.Responses.OrderResponse;
 using CarBookingUI.ViewModels;
@@ -31,7 +32,27 @@ public partial class HistoryOrderDetailsPage : ContentPage
 			{
                 var responseContent = await orderResponse.Content.ReadAsStringAsync();
                 viewModel.Order = JsonConvert.DeserializeObject<OrderCarResponse>(responseContent);
-				viewModel.CanWriteReview = viewModel.Order.RentToUTC < DateTime.UtcNow || viewModel.Order.RentFinished != null;
+
+                bool hasReview = false;
+
+                var response = await HttpHelper.GetAsync($"http://10.0.2.2:8300/review/GetByOrderId?orderId={viewModel.Order.Id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var review = JsonConvert.DeserializeObject<Review>(content);
+
+                    if (review != null) 
+                    {
+                        hasReview = true;
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException($"Error status code: {response.StatusCode}");
+                }
+
+                viewModel.CanWriteReview = (viewModel.Order.RentToUTC < DateTime.UtcNow || viewModel.Order.RentFinished != null) && !hasReview;
 				viewModel.CanEndOrder = viewModel.Order.RentFinished == null;
             }
 			else
@@ -61,7 +82,7 @@ public partial class HistoryOrderDetailsPage : ContentPage
 	{
         try
         {
-            await Navigation.PushAsync(new CreateReviewPage(viewModel.Order.CarId));
+            await Navigation.PushAsync(new CreateReviewPage(viewModel.Order.Id));
         }
         catch (Exception ex)
         {
