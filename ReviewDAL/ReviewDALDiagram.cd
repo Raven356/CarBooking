@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ReviewDAL.Models.ChatDTO">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ChatDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReviewDAL.Models.MessageDTO">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAIAAAAAQ=</HashCode>
+      <FileName>Models\MessageDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReviewDAL.Models.ReviewDTO">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAAAAAAAgAAAAAAAEAAgAACAAAAAA=</HashCode>
+      <FileName>Models\ReviewDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReviewDAL.Context.ReviewContext">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="ReviewContext" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAABAAAAAAAAEAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Context\ReviewContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReviewDAL.Context.ReviewContextSeeder">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Context\ReviewContextSeeder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReviewDAL.Repositories.ReviewRepository">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="ReviewRepository" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAECBAAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAJAA=</HashCode>
+      <FileName>Repositories\ReviewRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

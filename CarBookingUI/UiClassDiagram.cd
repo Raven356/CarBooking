@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CarBookingUI.Models.Car">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Order">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQgAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Review">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAAAAAAAgAAAAAAAEAAgAACAAAAAA=</HashCode>
+      <FileName>Models\Review.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.AuthRequests.BaseUserAuthRequest">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Models\Requests\AuthRequests\BaseUserAuthRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.AuthRequests.UserLoginRequest">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\AuthRequests\UserLoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.AuthRequests.UserRegisterRequest">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAQABAAQAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Requests\AuthRequests\UserRegisterRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.OrderRequests.CreateOrderRequest">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\OrderRequests\CreateOrderRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.OrderRequests.EditOrderRequest">
+    <Position X="2.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\OrderRequests\EditOrderRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.OrderRequests.EndOrderRequest">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\OrderRequests\EndOrderRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.OrderRequests.BaseOrderRequest">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAEAAA=</HashCode>
+      <FileName>Models\Requests\OrderRequests\BaseOrderRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.ReviewRequests.CreateReviewRequest">
+    <Position X="1.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\ReviewRequests\CreateReviewRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.ReviewRequests.UpdateReviewRequest">
+    <Position X="4.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Requests\ReviewRequests\UpdateReviewRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.ReviewRequests.BaseReviewRequest">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Requests\ReviewRequests\BaseReviewRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Requests.UserRequests.EditUserRequest">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAQABAAQAAACAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Requests\UserRequests\EditUserRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.AuthResponses.LoginSuccessfullResponse">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Responses\AuthResponses\LoginSuccessfullResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.CarResponses.CarModelResponse">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\CarResponses\CarModelResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.CarResponses.CarResponse">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAAAAAgAAAAAAAAAAAAEAABAAAAgAIAAAAAA=</HashCode>
+      <FileName>Models\Responses\CarResponses\CarResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.CarResponses.CarTypeResponse">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\CarResponses\CarTypeResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.OrderResponse.OrderCarResponse">
+    <Position X="8.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAQAAAACAQAAAABAAAAIAIAACAAA=</HashCode>
+      <FileName>Models\Responses\OrderResponses\OrderCarResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.OrderResponse.OrderInfoModel">
+    <Position X="10.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAAAAAAAAAQAAAACAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\OrderResponses\OrderInfoModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.OrderResponse.OrderModel">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Models\Responses\OrderResponses\OrderModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.OrderResponse.OrderResponse">
+    <Position X="14.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\OrderResponses\OrderResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.ReviewsResponses.ReviewsCollectionResponse">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\ReviewsResponses\ReviewsCollectionResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.UserResponses.UserDetailsResponse">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAQABAAQAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Responses\UserResponses\UserDetailsResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Models.Responses.UserResponses.UserIdResponse">
+    <Position X="16" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Responses\UserResponses\UserIdResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.CreateReviewPage">
+    <Position X="6.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\CreateReviewPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.EditOrderPage">
+    <Position X="14.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAgAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\EditOrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.EditUserPage">
+    <Position X="10.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\EditUserPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.HistoryOrderDetailsPage">
+    <Position X="8.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACgAAAAAAAgQAAIAAAAAAAAAAAACABAAAAA=</HashCode>
+      <FileName>Pages\HistoryOrderDetailsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.HistoryPage">
+    <Position X="12.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAgQAAIAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\HistoryPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.LoginPage">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAEAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\LoginPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.OrderPage">
+    <Position X="12.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\OrderPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.RegisterPage">
+    <Position X="6.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\RegisterPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.ReviewsPage">
+    <Position X="10.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAgQABIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\ReviewsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.UpdateReviewPage">
+    <Position X="2.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCQAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\UpdateReviewPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Pages.UserDetailsPage">
+    <Position X="4.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAgAAAAAAAgQAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\UserDetailsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.Popups.CarFilterPopup">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Popups\CarFilterPopup.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.BaseViewModel" Collapsed="true">
+    <Position X="10.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\BaseViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.CarFilterPopupViewModel">
+    <Position X="5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAQAAAAAJAAAAAAAQEAAAAAAAAAAEAgAAAIIAAA=</HashCode>
+      <FileName>ViewModels\CarFilterPopupViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.CreateReviewViewModel">
+    <Position X="9.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAgAAACIAAAAgAEQAAABEIAAAACAAAAAA=</HashCode>
+      <FileName>ViewModels\CreateReviewViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.EditOrderPageViewModel">
+    <Position X="16.25" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAQQAAQAAAAgAAAAIAAAAAQAEAAEABAAAAAQABAEEAA=</HashCode>
+      <FileName>ViewModels\EditOrderPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.EditReviewViewModel">
+    <Position X="0.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAABAAAAAAgAAACIAAAAgAEQAAABEIEAAACAAAAAA=</HashCode>
+      <FileName>ViewModels\EditReviewViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.EditUserViewModel">
+    <Position X="7.25" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAACAAAAAgAAAEAAQABAAUAAAiAAAAIgAAAgA=</HashCode>
+      <FileName>ViewModels\EditUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.HistoryOrderDetailsPageViewModel">
+    <Position X="11.75" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAABAAAAAAAIAAAAAAIAAAACAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\HistoryOrderDetailsPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.HistoryPageViewModel">
+    <Position X="18.5" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\HistoryPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.MainPageViewModel">
+    <Position X="2.75" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQAAAgAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MainPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.OrderPageViewModel">
+    <Position X="23" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAASAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\OrderPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.ReviewsPageViewModel">
+    <Position X="14" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ReviewsPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CarBookingUI.ViewModels.UserDetailsViewModel">
+    <Position X="20.75" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAACAAAAAgAAAEAAQABAAUAAAgAAAAIAAAAAA=</HashCode>
+      <FileName>ViewModels\UserDetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

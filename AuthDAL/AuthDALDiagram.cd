@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AuthDAL.Models.TokenDTO">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAkAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <FileName>Models\TokenDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthDAL.Models.UserDTO">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAACAAAAAAEAAAAAQABAAQAAAAAAAQIAAAAAA=</HashCode>
+      <FileName>Models\UserDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthDAL.Context.AuthContext">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <Members>
+      <Method Name="AuthContext" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Context\AuthContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthDAL.Context.AuthContextSeeder">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Context\AuthContextSeeder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthDAL.Repositories.AuthRepository" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAQAAAAAAQAIAAAABAAAAAAAQAAAAAAI=</HashCode>
+      <FileName>Repositories\AuthRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AuthDAL.Repositories.TokenRepository" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Repositories\TokenRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AuthDAL.Repositories.UserRepository" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAQAAAAQAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Enum Name="AuthDAL.Models.RolesEnum">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAQAACAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RolesEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AuthDAL.Models.TypeEnum">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
