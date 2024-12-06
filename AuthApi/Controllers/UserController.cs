@@ -11,11 +11,13 @@ namespace AuthApi.Controllers
     {
         private readonly ITokenService tokenService;
         private readonly IUserService userService;
+        private readonly ILogger<UserController> logger;
 
-        public UserController(ITokenService tokenService, IUserService userService)
+        public UserController(ITokenService tokenService, IUserService userService, ILogger<UserController> logger)
         {
             this.tokenService = tokenService;
             this.userService = userService;
+            this.logger = logger;
         }
 
         [HttpGet("GetUserIdByToken")]
@@ -23,6 +25,7 @@ namespace AuthApi.Controllers
         {
             if (token == null) 
             {
+                logger.LogInformation("Users token was empty");
                 return Unauthorized();
             }
 
@@ -35,6 +38,7 @@ namespace AuthApi.Controllers
         {
             if (token == null)
             {
+                logger.LogInformation("Users token was empty");
                 return Unauthorized();
             }
 

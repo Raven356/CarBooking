@@ -12,62 +12,90 @@ namespace CarCatalogApi.Controllers
     public class CarController : Controller
     {
         private readonly ICarService carService;
+        private readonly ILogger<CarController> logger;
 
-        public CarController(ICarService carService)
+        public CarController(ICarService carService, ILogger<CarController> logger)
         {
             this.carService = carService;
+            this.logger = logger;
         }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll(string? type, string? fromPrice, string? toPrice, string? model, int? userId)
         {
-            var cars = await carService.GetAllAsymc(type, fromPrice, toPrice, model);
-
-            if (userId.HasValue)
+            try
             {
-                var rpcPublisher = HttpContext.RequestServices.GetRequiredService<CarEventsPubisher>();
+                logger.LogInformation("Started getting cars");
+                var cars = await carService.GetAllAsync(type, fromPrice, toPrice, model);
 
-                var request = new GetUserOrdersEvent { UserId = userId.Value };
-
-                var response = await rpcPublisher.PublishWithReply(request, "get_user_orders");
-
-                var orders = JsonSerializer.Deserialize<IEnumerable<UserOrderResponse>>(response);
-
-                if (orders != null)
+                if (userId.HasValue)
                 {
-                    // Групуємо замовлення за CarId і підраховуємо кількість
-                    var carOrderCounts = orders
-                        .GroupBy(o => o.CarId)
-                        .ToDictionary(g => g.Key, g => g.Count());
+                    var rpcPublisher = HttpContext.RequestServices.GetRequiredService<CarEventsPubisher>();
 
-                    // Сортуємо машини: спочатку ті, що найчастіше замовлялися, далі - за іншими критеріями
-                    cars = cars
-                        .OrderByDescending(c => carOrderCounts.GetValueOrDefault(c.Id, 0)) // Замовлення
-                        .ThenBy(c => c.CarType.Type == type)                                    // Тип
-                        .ThenBy(c => c.Model.Model == model)                                    // Модель
-                        .ThenBy(c => c.RentPrice >= double.Parse(fromPrice ?? "0") &&
-                                    c.RentPrice <= double.Parse(toPrice ?? double.MaxValue.ToString())) // Ціна
-                        .ToList();
+                    var request = new GetUserOrdersEvent { UserId = userId.Value };
+
+                    var response = await rpcPublisher.PublishWithReply(request, "get_user_orders");
+
+                    var orders = JsonSerializer.Deserialize<IEnumerable<UserOrderResponse>>(response);
+
+                    if (orders != null)
+                    {
+                        logger.LogInformation("Sorting cars");
+                        var carOrderCounts = orders
+                            .GroupBy(o => o.CarId)
+                            .ToDictionary(g => g.Key, g => g.Count());
+
+                        cars = cars
+                            .OrderByDescending(c => carOrderCounts.GetValueOrDefault(c.Id, 0))
+                            .ThenBy(c => c.CarType.Type == type)
+                            .ThenBy(c => c.Model.Model == model)
+                            .ThenBy(c => c.RentPrice >= double.Parse(fromPrice ?? "0") &&
+                                        c.RentPrice <= double.Parse(toPrice ?? double.MaxValue.ToString()))
+                            .ToList();
+                    }
                 }
-            }
 
-            return Json(cars);
+                return Json(cars);
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError($"Error hapenned when getting cars, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("GetAllTypes")]
         public async Task<IActionResult> GetAllTypes()
         {
-            var types = await carService.GetAllTypesAsync();
+            try
+            {
+                logger.LogInformation("Getting car types");
+                var types = await carService.GetAllTypesAsync();
 
-            return Json(types);
+                return Json(types);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error happened during getting car types, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("GetAllModels")]
         public async Task<IActionResult> GetAllModels()
         {
-            var models = await carService.GetAllModelsAsync();
+            try
+            {
+                logger.LogInformation("Getting car models");
+                var models = await carService.GetAllModelsAsync();
 
-            return Json(models);
+                return Json(models);
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError($"Error happened during getting car models, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
     }
 }

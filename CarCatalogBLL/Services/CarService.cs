@@ -14,7 +14,7 @@ namespace CarBookingBLL.Services
             this.carRepository = carRepository;
         }
 
-        public async Task<IEnumerable<Car>> GetAllAsymc(string? type, string? fromPrice, string? toPrice, string? model)
+        public async Task<IEnumerable<Car>> GetAllAsync(string? type, string? fromPrice, string? toPrice, string? model)
         {
             var carsDto = await carRepository.GetAllAsync(type, fromPrice, toPrice, model);
 

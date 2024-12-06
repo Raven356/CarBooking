@@ -1,6 +1,0 @@
-@EfficiencyApi_HostAddress = http://localhost:5208
-
-GET {{EfficiencyApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

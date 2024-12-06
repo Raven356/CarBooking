@@ -14,106 +14,156 @@ namespace OrderApi.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly ILogger<OrderController> logger;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
             this.orderService = orderService;
+            this.logger = logger;
         }
 
         [HttpGet("GetByUserId")]
         public async Task<IActionResult> GetByUserId([FromQuery] int userId)
         {
-            var orders = await orderService.GetRentOrdersByUserIdAsync(userId);
+            try
+            {
+                logger.LogInformation("Getting orders by user id");
+                var orders = await orderService.GetRentOrdersByUserIdAsync(userId);
 
-            return Json(orders);
+                return Json(orders);
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError($"Error happened while getting orders by userId, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("GetOrderById")]
         public async Task<IActionResult> GetById([FromQuery] int orderId)
         {
-            var order = await orderService.GetById(orderId);
-
-            if (order == null)
+            try
             {
-                return NotFound("Order not found");
+                logger.LogInformation($"Getting order by id, orderId: {orderId}");
+                var order = await orderService.GetById(orderId);
+
+                if (order == null)
+                {
+                    logger.LogInformation($"Order with id: {orderId} was not found!");
+                    return NotFound("Order not found");
+                }
+
+                var rpcPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsPublisher>();
+                var carRequest = new GetOrderWithCarEvent { CarId = order.RentInfo.CarId };
+
+                var carResponse = await rpcPublisher.PublishWithReply(carRequest, "car_service_queue");
+
+                var car = JsonSerializer.Deserialize<CarResponse>(carResponse);
+
+                var response = new OrderCarResponse
+                {
+                    Id = orderId,
+                    CarPlate = car.CarPlate,
+                    IsAcepted = order.IsAcepted,
+                    RentFromUTC = order.RentInfo.RentFromUTC,
+                    RentToUTC = order.RentInfo.RentToUTC,
+                    RentFinished = order.RentInfo.RentFinished,
+                    CarId = car.CarId,
+                    Image = car.Image
+                };
+
+                return Ok(response);
             }
-
-            var rpcPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsPublisher>();
-            var carRequest = new GetOrderWithCarEvent { CarId = order.RentInfo.CarId };
-
-            var carResponse = await rpcPublisher.PublishWithReply(carRequest, "car_service_queue");
-
-            var car = JsonSerializer.Deserialize<CarResponse>(carResponse);
-
-            var response = new OrderCarResponse
+            catch (Exception ex) 
             {
-                Id = orderId,
-                CarPlate = car.CarPlate,
-                IsAcepted = order.IsAcepted,
-                RentFromUTC = order.RentInfo.RentFromUTC,
-                RentToUTC = order.RentInfo.RentToUTC,
-                RentFinished = order.RentInfo.RentFinished,
-                CarId = car.CarId,
-                Image = car.Image
-            };
-
-            return Ok(response);
+                logger.LogError($"Error happened while getting order by id!");
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost("CreateOrder")]
         public async Task<IActionResult> CreateOrder(CreateOrderRequest createOrderRequest)
         {
-            var orderEvent = new OrderStartedEvent { CarId = createOrderRequest.CarId, UserId = createOrderRequest.UserId };
-
-            var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
-            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(createOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
-
-            PublishTimedHistoryEvent(orderEvent);
-
-            var order = new OrderBLL.Models.RentOrder
+            try
             {
-                IsAcepted = true,
-                RentInfo = new OrderBLL.Models.RentInfo
+                logger.LogInformation("Started creating order");
+                var orderEvent = new OrderStartedEvent { CarId = createOrderRequest.CarId, UserId = createOrderRequest.UserId };
+
+                var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
+                rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(createOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
+
+                PublishTimedHistoryEvent(orderEvent);
+
+                var order = new OrderBLL.Models.RentOrder
                 {
-                    CarId = createOrderRequest.CarId,
-                    RentBy = createOrderRequest.UserId,
-                    RentFromUTC = createOrderRequest.DateFrom,
-                    RentToUTC = createOrderRequest.DateTo
-                }
-            };
+                    IsAcepted = true,
+                    RentInfo = new OrderBLL.Models.RentInfo
+                    {
+                        CarId = createOrderRequest.CarId,
+                        RentBy = createOrderRequest.UserId,
+                        RentFromUTC = createOrderRequest.DateFrom,
+                        RentToUTC = createOrderRequest.DateTo
+                    }
+                };
 
-            await orderService.SaveOrderAsync(order);
+                await orderService.SaveOrderAsync(order);
 
-            return Ok();
+                logger.LogInformation("Order created successfully");
+                return Ok();
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError($"Error happened while creating an order, exception: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost("EndOrder")]
         public async Task<IActionResult> EndOrder(EndOrderRequest endOrderRequest)
         {
-            var order = await orderService.GetById(endOrderRequest.OrderId);
+            try
+            {
+                logger.LogInformation("Started ending order");
+                var order = await orderService.GetById(endOrderRequest.OrderId);
 
-            var endOrderEvent = new EndOrderEvent { CarId = order.RentInfo.CarId };
-            var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsPublisher>();
-            rabbitMQPublisher.Publish(endOrderEvent, "end_order");
+                var endOrderEvent = new EndOrderEvent { CarId = order.RentInfo.CarId };
+                var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsPublisher>();
+                rabbitMQPublisher.Publish(endOrderEvent, "end_order");
 
-            await orderService.EndOrderAsync(endOrderRequest.OrderId, endOrderRequest.FinishedTime);
+                await orderService.EndOrderAsync(endOrderRequest.OrderId, endOrderRequest.FinishedTime);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error happened while ending an order, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost("EditOrder")]
         public async Task<IActionResult> EditOrder(EditOrderRequest editOrderRequest)
         {
-            var newOrder = await orderService.EditOrderAsync(editOrderRequest.Id, editOrderRequest.DateFrom, editOrderRequest.DateTo);
+            try
+            {
+                logger.LogInformation("Started editing order");
+                var newOrder = await orderService.EditOrderAsync(editOrderRequest.Id, editOrderRequest.DateFrom, editOrderRequest.DateTo);
 
-            var orderEvent = new OrderStartedEvent { CarId = newOrder.RentInfo.CarId, UserId = newOrder.RentInfo.RentBy };
-            ChangeTimedHistoryOrderEvent(orderEvent);
-            PublishTimedHistoryEvent(orderEvent);
+                var orderEvent = new OrderStartedEvent { CarId = newOrder.RentInfo.CarId, UserId = newOrder.RentInfo.RentBy };
+                ChangeTimedHistoryOrderEvent(orderEvent);
+                PublishTimedHistoryEvent(orderEvent);
 
-            var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
-            rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(editOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
+                var rabbitMQPublisher = HttpContext.RequestServices.GetRequiredService<OrderEventsTimeoutPublisher>();
+                rabbitMQPublisher.PublishWithTimeout(orderEvent, "create_order", (int)(editOrderRequest.DateFrom - DateTime.UtcNow).TotalMilliseconds);
 
-            return Ok();
+                logger.LogInformation("Order edited successfully");
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error happened while editing order, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         private void ChangeTimedHistoryOrderEvent(BaseEvent @event)

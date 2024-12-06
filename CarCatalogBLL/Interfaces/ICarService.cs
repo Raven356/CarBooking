@@ -4,7 +4,7 @@ namespace CarBookingBLL.Interfaces
 {
     public interface ICarService
     {
-        public Task<IEnumerable<Car>> GetAllAsymc(string? type, string? fromPrice, string? toPrice, string? model);
+        public Task<IEnumerable<Car>> GetAllAsync(string? type, string? fromPrice, string? toPrice, string? model);
 
         public Task MakeCarBooked(int carId, int userId);
 

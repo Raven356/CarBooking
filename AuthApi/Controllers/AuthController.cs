@@ -12,20 +12,31 @@ namespace AuthApi.Controllers
     {
         private readonly IAuthService authService;
         private readonly ITokenService tokenService;
+        private readonly ILogger<AuthController> logger;
 
-        public AuthController(IAuthService authService, ITokenService tokenService)
+        public AuthController(IAuthService authService, ITokenService tokenService, ILogger<AuthController> logger)
         {
             this.authService = authService;
             this.tokenService = tokenService;
+            this.logger = logger;
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterModel user)
         {
-            await authService.Register(AuthMapper.Map(user));
+            try
+            {
+                await authService.Register(AuthMapper.Map(user));
 
-            return Ok();
+                logger.LogInformation("User registered successfully!");
+                return Ok();
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError($"Something went wrong when registering user, error: {ex.Message}");
+                return BadRequest(ex);
+            }
         }
 
         [AllowAnonymous]
@@ -36,9 +47,11 @@ namespace AuthApi.Controllers
             {
                 var accessToken = await tokenService.CreateAccessToken(AuthMapper.Map(user));
 
+                logger.LogInformation("Logged in successfully!");
                 return Ok(new { token = accessToken.Token });
             }
 
+            logger.Log(LogLevel.Information, "Provided user credentials were wrong!");
             return Unauthorized();
         }
 
@@ -47,6 +60,7 @@ namespace AuthApi.Controllers
         {
             await authService.Logout(userId);
 
+            logger.LogInformation("User logouted successfully!");
             return Ok();
         }
     }
