@@ -8,16 +8,17 @@ namespace CarBookingDAL.Repositories
 {
     public class CarRepository : ICarRepository
     {
-        private readonly CarCatalogContext context;
+        private readonly IServiceProvider serviceProvider;
 
         public CarRepository(IServiceProvider serviceProvider)
         {
-            var scope = serviceProvider.CreateScope();
-            context = scope.ServiceProvider.GetRequiredService<CarCatalogContext>();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<IEnumerable<CarDTO>> GetAllAsync(string? type, string? fromPrice, string? toPrice, string? model)
         {
+            using var context = CreateContext();
+
             var cars = await context.CarDTOs
                 .Where(car => car.RentBy == null)
                 .Include(car => car.CarType)
@@ -53,6 +54,8 @@ namespace CarBookingDAL.Repositories
 
         public async Task<IEnumerable<string>> GetAllModelsAsync()
         {
+            using var context = CreateContext();
+
             return await context.CarModelDTOs
                 .Select(model => model.Model)
                 .ToListAsync();
@@ -60,6 +63,8 @@ namespace CarBookingDAL.Repositories
 
         public async Task<IEnumerable<string>> GetAllTypesAsync()
         {
+            using var context = CreateContext();
+
             return await context.CarTypeDTOs
                 .Select(type => type.Type)
                 .ToListAsync();
@@ -67,6 +72,8 @@ namespace CarBookingDAL.Repositories
 
         public async Task<CarDTO> GetCarByIdAsync(int carId)
         {
+            using var context = CreateContext();
+
             var car = await context.CarDTOs
                 .Include(car => car.CarType)
                 .Include(car => car.Model)
@@ -77,6 +84,8 @@ namespace CarBookingDAL.Repositories
 
         public async Task MakeCarAvailable(int carId)
         {
+            using var context = CreateContext();
+
             var existingCar = await context.CarDTOs.FindAsync(carId);
 
             if (existingCar != null)
@@ -93,6 +102,8 @@ namespace CarBookingDAL.Repositories
 
         public async Task MakeCarBooked(int carId, int userId)
         {
+            using var context = CreateContext();
+
             var existingCar = await context.CarDTOs.FindAsync(carId);
 
             if (existingCar != null)
@@ -105,6 +116,14 @@ namespace CarBookingDAL.Repositories
             }
 
             throw new KeyNotFoundException($"Car with id:{carId} not found!");
+        }
+
+        private CarCatalogContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<CarCatalogContext>();
+
+            return context;
         }
     }
 }

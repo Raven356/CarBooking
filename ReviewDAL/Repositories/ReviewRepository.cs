@@ -8,17 +8,17 @@ namespace ReviewDAL.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
-        private readonly ReviewContext context;
+        private readonly IServiceProvider serviceProvider;
 
         public ReviewRepository(IServiceProvider serviceProvider)
         {
-            var scope = serviceProvider.CreateScope();
-            context = scope.ServiceProvider.GetRequiredService<ReviewContext>();
-            context.Database.EnsureCreated();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task CreateReviewAsync(ReviewDTO reviewDTO)
         {
+            using var context = CreateContext();
+
             reviewDTO.CreatedDate = DateTime.Now;
             await context.AddAsync(reviewDTO);
             await context.SaveChangesAsync();
@@ -26,11 +26,15 @@ namespace ReviewDAL.Repositories
 
         public async Task<IEnumerable<ReviewDTO>> GetAllAsync()
         {
+            using var context = CreateContext();
+
             return await context.Reviews.ToListAsync();
         }
 
         public async Task<ReviewDTO?> GetByIdAsync(int id)
         {
+            using var context = CreateContext();
+
             var review = await context.Reviews.SingleOrDefaultAsync(rev => rev.Id == id);
 
             return review;
@@ -38,6 +42,8 @@ namespace ReviewDAL.Repositories
 
         public async Task<ReviewDTO> GetByOrderIdAsync(int orderId)
         {
+            using var context = CreateContext();
+
             var review = await context.Reviews.FirstOrDefaultAsync(rev => rev.OrderId == orderId);
 
             return review;
@@ -45,6 +51,8 @@ namespace ReviewDAL.Repositories
 
         public async Task<IEnumerable<ReviewDTO>> GetByUserIdAsync(int userId)
         {
+            using var context = CreateContext();
+
             var reviews = await context.Reviews.Where(rev => rev.UserId == userId).ToListAsync();
 
             return reviews;
@@ -52,6 +60,8 @@ namespace ReviewDAL.Repositories
 
         public async Task UpdateReviewAsync(ReviewDTO reviewDTO)
         {
+            using var context = CreateContext();
+
             var existingReview = await context.Reviews.FindAsync(reviewDTO.Id);
 
             if (existingReview != null)
@@ -68,6 +78,15 @@ namespace ReviewDAL.Repositories
             {
                 throw new KeyNotFoundException($"Review with ID {reviewDTO.Id} not found.");
             }
+        }
+
+        private ReviewContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ReviewContext>();
+            context.Database.EnsureCreated();
+
+            return context;
         }
     }
 }

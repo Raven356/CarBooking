@@ -8,16 +8,17 @@ namespace AuthDAL.Repositories
 {
     public class TokenRepository : ITokenRepository
     {
-        private readonly AuthContext authContext;
+        private readonly IServiceProvider serviceProvider;
 
         public TokenRepository(IServiceProvider serviceProvider)
         {
-            var scope = serviceProvider.CreateScope();
-            authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<TokenDTO?> GetRefreshTokenAsync(int userId)
         {
+            using var authContext = CreateContext();
+
             return await authContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId
                 && token.ExpiresAt > DateTime.UtcNow
                 && token.Type == TypeEnum.RefreshToken);
@@ -25,10 +26,20 @@ namespace AuthDAL.Repositories
 
         public async Task<TokenDTO> SaveTokenAsync(TokenDTO token)
         {
+            using var authContext = CreateContext();
+
             authContext.Attach(token.User);
             authContext.Tokens.Add(token);
             await authContext.SaveChangesAsync();
             return token;
+        }
+
+        private AuthContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+
+            return authContext;
         }
     }
 }

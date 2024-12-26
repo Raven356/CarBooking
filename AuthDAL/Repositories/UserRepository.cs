@@ -9,18 +9,19 @@ namespace AuthDAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private AuthContext authContext;
         private readonly PasswordHasher passwordHasher;
+        private readonly IServiceProvider serviceProvider;
 
         public UserRepository(IServiceProvider serviceProvider)
         {
-            var scope = serviceProvider.CreateScope();
-            authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
             passwordHasher = new PasswordHasher();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task EditUserAsync(UserDTO user)
         {
+            using var authContext = CreateContext();
+
             var existingUser = await authContext.Users.FirstAsync(u => u.Id == user.Id);
 
             if (!string.IsNullOrEmpty(user.Surname))
@@ -60,9 +61,19 @@ namespace AuthDAL.Repositories
 
         public async Task<UserDTO> GetUserById(int userId)
         {
+            using var authContext = CreateContext();
+
             var user = await authContext.Users.FirstAsync(user => user.Id == userId);
 
             return user;
+        }
+
+        private AuthContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+
+            return authContext;
         }
     }
 }

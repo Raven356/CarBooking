@@ -8,16 +8,17 @@ namespace OrderDAL.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private OrderContext context;
+        private readonly IServiceProvider serviceProvider;
 
         public OrderRepository(IServiceProvider serviceProvider) 
         {
-            var scope = serviceProvider.CreateScope();
-            context = scope.ServiceProvider.GetRequiredService<OrderContext>();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<RentOrderDTO> EditOrderAsync(int orderId, DateTime dateFrom, DateTime dateTo)
         {
+            using var context = CreateContext();
+
             var order = await context.RentOrder
                 .Include(order => order.RentInfoDTO)
                 .FirstAsync(order => order.Id == orderId);
@@ -39,6 +40,8 @@ namespace OrderDAL.Repositories
 
         public async Task EndOrderAsync(int orderId, DateTime endOrderTime)
         {
+            using var context = CreateContext();
+
             var order = await context.RentOrder
                 .Include(order => order.RentInfoDTO)
                 .FirstAsync(order => order.Id == orderId);
@@ -56,6 +59,8 @@ namespace OrderDAL.Repositories
 
         public async Task<RentOrderDTO> GetById(int orderId)
         {
+            using var context = CreateContext();
+
             var order = await context.RentOrder
                 .Include(o => o.RentInfoDTO)
                 .FirstAsync(o => o.Id == orderId);
@@ -65,6 +70,8 @@ namespace OrderDAL.Repositories
 
         public async Task<IEnumerable<RentOrderDTO>> GetByUserId(int userId)
         {
+            using var context = CreateContext();
+
             var orders = await context.RentOrder
                 .Include(o => o.RentInfoDTO)
                 .Where(o => o.RentInfoDTO.RentBy == userId)
@@ -75,6 +82,8 @@ namespace OrderDAL.Repositories
 
         public async Task<IEnumerable<RentOrderDTO>> GetRentOrdersByUserIdAsync(int userId)
         {
+            using var context = CreateContext();
+
             var orders = await context.RentOrder
                 .Include(order => order.RentInfoDTO)
                 .Where(order => order.RentInfoDTO.RentBy == userId)
@@ -85,9 +94,19 @@ namespace OrderDAL.Repositories
 
         public async Task SaveOrderAsync(RentOrderDTO rentOrder)
         {
+            using var context = CreateContext();
+
             await context.AddAsync(rentOrder);
 
             await context.SaveChangesAsync();
+        }
+
+        private OrderContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<OrderContext>();
+
+            return context;
         }
     }
 }

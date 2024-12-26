@@ -6,8 +6,8 @@
     <VerticalStackLayout Padding="20">
         <Entry x:Name="NameEntry" Placeholder="Name" />
         <Entry x:Name="SurnameEntry" Placeholder="Surname" />
-        <Entry x:Name="PhoneEntry" Placeholder="Phone" />
-        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
+        <Entry x:Name="PhoneEntry" Placeholder="Phone" TextChanged="OnPhoneEntryTextChanged" />
+        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" TextChanged="OnEmailEntryTextChanged" />
         <DatePicker x:Name="DateOfBirthPicker" />
         <Entry x:Name="LoginEntry" Placeholder="Login" />
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />

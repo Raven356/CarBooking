@@ -9,28 +9,30 @@ namespace AuthDAL.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly AuthContext authContext;
         private readonly PasswordHasher passwordHasher;
+        private readonly IServiceProvider serviceProvider;
 
         public AuthRepository(IServiceProvider serviceProvider)
         {
-            var scope = serviceProvider.CreateScope();
-            authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
             passwordHasher = new PasswordHasher();
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<UserDTO?> GetUserByIdAsync(int id)
         {
+            using var authContext = CreateContext();
             return await authContext.Users.FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<UserDTO?> GetUserByLoginAsync(string login)
         {
+            using var authContext = CreateContext();
             return await authContext.Users.FirstOrDefaultAsync(user => user.Login == login);
         }
 
         public async Task<bool> Login(UserDTO userDTO)
         {
+            using var authContext = CreateContext();
             var registeredUser = await authContext.Users.FirstOrDefaultAsync(user => user.Login == userDTO.Login && user.IsActive);
             if (registeredUser != null) 
             {
@@ -42,6 +44,7 @@ namespace AuthDAL.Repositories
 
         public async Task Logout(int userId)
         {
+            using var authContext = CreateContext();
             var existingToken = await authContext.Tokens.FirstOrDefaultAsync(token => token.UserId == userId);
 
             if (existingToken != null)
@@ -52,9 +55,18 @@ namespace AuthDAL.Repositories
 
         public async Task Register(UserDTO userDTO)
         {
+            using var authContext = CreateContext();
             userDTO.PasswordHash = passwordHasher.HashPassword(userDTO.PasswordHash);
             authContext.Users.Add(userDTO);
             await authContext.SaveChangesAsync();
+        }
+
+        private AuthContext CreateContext()
+        {
+            var scope = serviceProvider.CreateScope();
+            var authContext = scope.ServiceProvider.GetRequiredService<AuthContext>();
+
+            return authContext;
         }
     }
 }
